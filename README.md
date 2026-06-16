@@ -45,9 +45,7 @@ The table name is:
 purple_evolution_registrations
 ```
 
-The API counts registrations where `status != 'rejected'`. New submissions are inserted as `pending`.
-
-Positions `1` to `100` are reserved internally. Public registrations start at `registration_number = 101`. Premium channel eligibility remains capped at `500`, so public users are eligible when `registration_number <= 500`.
+Registration numbering is handled server-side.
 
 ## GSAP Setup
 
@@ -57,6 +55,12 @@ GSAP is isolated in client components through `lib/gsap/client.ts`.
 - Sections use scoped `useGSAP` calls for cleanup.
 - The implementation checks `prefers-reduced-motion` and skips scroll animation for users who request reduced motion.
 - Animated properties are limited to transform, opacity, and lightweight shadow/glow effects.
+
+## Fonts
+
+The app is configured to prefer Peyda for Persian UI and Poppins for Latin accents, then fall back to system sans-serif fonts.
+
+No local Peyda/Poppins font files are currently present in the project. When brand font files are available, add them to the project and replace the TODO comments in `app/globals.css` with real font loading.
 
 ## Local Run
 
@@ -81,14 +85,14 @@ npm run start
 ## QA Checklist
 
 - Page renders in Persian and RTL on mobile widths.
-- Header CTA scrolls to the form on mobile.
+- Header UID CTA scrolls to the form.
 - Bitunix CTA opens `NEXT_PUBLIC_BITUNIX_REFERRAL_URL`.
 - Required fields show Persian validation errors.
 - Invalid phone and email values show Persian validation errors.
 - Empty select fields show Persian validation errors.
 - Form cannot submit until both required checkboxes are checked.
 - Duplicate `bitunix_uid` returns a Persian duplicate error.
-- First public valid registration returns `registration_number: 101`.
-- Public registrations with `registration_number <= 500` return `is_first_500: true`.
-- Public registrations with `registration_number > 500` return `is_first_500: false`.
+- Successful registrations return a server-generated `registration_number`.
+- Registrations with `registration_number <= 500` return `is_first_500: true`.
+- Registrations with `registration_number > 500` return `is_first_500: false`.
 - Supabase service role key is present only in Vercel server environment variables.

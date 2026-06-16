@@ -18,7 +18,6 @@ const persianNumberFormatter = new Intl.NumberFormat("fa-IR", {
 
 export function InteractiveUidGuideSection() {
   const scope = useRef<HTMLElement | null>(null);
-  const activeIndexRef = useRef(0);
   const [activeStep, setActiveStep] = useState(0);
   const content = siteContent.howItWorks;
 
@@ -31,85 +30,91 @@ export function InteractiveUidGuideSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-uid-step]", { opacity: 1, y: 0 });
+        gsap.set("[data-uid-intro], [data-uid-step-card]", {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        gsap.set("[data-uid-progress]", { scaleX: 1 });
         return;
       }
 
-      gsap.from("[data-uid-step]", {
-        opacity: 0,
-        y: 24,
-        duration: 0.65,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: scope.current,
-          start: "top 72%",
+      gsap.fromTo(
+        "[data-uid-intro]",
+        { opacity: 0, y: 26 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 76%",
+          },
+        },
+      );
+
+      gsap.fromTo(
+        "[data-uid-progress]",
+        { scaleX: 0, transformOrigin: "right center" },
+        {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 78%",
+            end: "bottom 60%",
+            scrub: 0.3,
+          },
+        },
+      );
+
+      ScrollTrigger.batch("[data-uid-step-card]", {
+        start: "top 82%",
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 28, scale: 0.97 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.62,
+              stagger: 0.1,
+              ease: "power3.out",
+              overwrite: true,
+            },
+          );
         },
       });
 
-      gsap.utils.toArray<HTMLElement>("[data-uid-step-card]").forEach((card, index) => {
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 72%",
-          end: "bottom 42%",
-          onEnter: () => setActiveStep(index),
-          onEnterBack: () => setActiveStep(index),
-        });
-      });
+      const triggers = gsap.utils
+        .toArray<HTMLElement>("[data-uid-step-card]")
+        .map((card, index) =>
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top 66%",
+            end: "bottom 38%",
+            onEnter: () => setActiveStep(index),
+            onEnterBack: () => setActiveStep(index),
+          }),
+        );
 
-      const media = gsap.matchMedia();
-
-      media.add("(min-width: 1024px)", () => {
-        const stage = scope.current?.querySelector<HTMLElement>("[data-uid-stage]");
-
-        if (!scope.current || !stage) {
-          return undefined;
-        }
-
-        const trigger = ScrollTrigger.create({
-          trigger: scope.current,
-          start: "top top",
-          end: () => `+=${content.steps.length * 460}`,
-          pin: stage,
-          scrub: 0.45,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const nextIndex = Math.min(
-              content.steps.length - 1,
-              Math.floor(self.progress * content.steps.length),
-            );
-
-            if (nextIndex !== activeIndexRef.current) {
-              activeIndexRef.current = nextIndex;
-              setActiveStep(nextIndex);
-            }
-          },
-        });
-
-        return () => trigger.kill();
-      });
-
-      return () => media.revert();
+      return () => triggers.forEach((trigger) => trigger.kill());
     },
     { scope },
   );
 
   return (
-    <section
-      ref={scope}
-      className="relative px-5 py-10 sm:px-6 lg:min-h-screen lg:px-8 lg:py-0"
-    >
-      <div
-        data-uid-stage=""
-        className="mx-auto flex w-full max-w-6xl flex-col justify-center lg:min-h-screen"
-      >
-        <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-center">
-          <div>
+    <section ref={scope} className="relative px-5 py-10 sm:px-6 lg:px-8 lg:py-16">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
+          <div data-uid-intro="">
             <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
             <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
               {content.title}
             </h2>
-            <p className="mt-4 max-w-lg text-sm font-bold leading-7 text-brand-light/78 sm:mt-5 sm:leading-8">
+            <p className="mt-4 max-w-lg text-sm font-bold leading-7 text-brand-light/78 sm:text-base sm:leading-8">
               مسیر ورود کوتاه است: ثبت‌نام با لینک Eventum، برداشتن UID، و ثبت اطلاعات همین‌جا.
             </p>
             <div className="mt-7 hidden lg:block">
@@ -121,11 +126,11 @@ export function InteractiveUidGuideSection() {
           </div>
 
           <div className="rounded-[1.5rem] border border-brand-purple/14 bg-white/[0.03] p-3.5 sm:p-5 lg:rounded-[2rem] lg:p-7">
-            <div className="relative hidden pb-8 lg:block">
+            <div className="relative mb-6 hidden lg:block">
               <div className="absolute left-0 right-0 top-5 h-px bg-white/10" />
               <div
-                className="absolute right-0 top-5 h-px bg-brand-purple shadow-glow transition-all duration-300"
-                style={{ width: `${((activeStep + 1) / content.steps.length) * 100}%` }}
+                data-uid-progress=""
+                className="absolute right-0 top-5 h-px bg-brand-purple shadow-glow"
               />
               <div className="relative grid grid-cols-3 gap-4">
                 {content.steps.map((step, index) => {
@@ -133,21 +138,20 @@ export function InteractiveUidGuideSection() {
                   const isPassed = activeStep > index;
 
                   return (
-                    <div key={step.title} data-uid-step="">
-                      <span
-                        className={`relative z-10 flex size-10 items-center justify-center rounded-full border text-sm font-black transition ${
-                          isActive || isPassed
-                            ? "border-brand-purple bg-brand-purple text-brand-white shadow-glow"
-                            : "border-brand-purple/25 bg-night text-brand-gray"
-                        }`}
-                      >
-                        {isPassed ? (
-                          <CheckCircle2 className="size-5" aria-hidden="true" />
-                        ) : (
-                          persianNumberFormatter.format(index + 1)
-                        )}
-                      </span>
-                    </div>
+                    <span
+                      key={step.title}
+                      className={`relative z-10 flex size-10 items-center justify-center rounded-full border text-sm font-black transition ${
+                        isActive || isPassed
+                          ? "border-brand-purple bg-brand-purple text-brand-white shadow-glow"
+                          : "border-brand-purple/25 bg-night text-brand-gray"
+                      }`}
+                    >
+                      {isPassed ? (
+                        <CheckCircle2 className="size-5" aria-hidden="true" />
+                      ) : (
+                        persianNumberFormatter.format(index + 1)
+                      )}
+                    </span>
                   );
                 })}
               </div>
@@ -158,11 +162,10 @@ export function InteractiveUidGuideSection() {
                 const isActive = activeStep === index;
 
                 return (
-                  <div
+                  <article
                     key={step.title}
-                    data-uid-step=""
                     data-uid-step-card=""
-                    className={`rounded-2xl border p-4 transition duration-300 lg:rounded-3xl lg:p-5 ${
+                    className={`rounded-2xl border p-4 opacity-0 transition duration-300 lg:rounded-3xl lg:p-5 ${
                       isActive
                         ? "border-brand-purple/55 bg-brand-purple/10 shadow-[0_18px_45px_rgba(143,0,255,0.14)]"
                         : "border-brand-purple/15 bg-ink/62"
@@ -188,7 +191,7 @@ export function InteractiveUidGuideSection() {
                     <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75 lg:mt-3">
                       {step.text}
                     </p>
-                  </div>
+                  </article>
                 );
               })}
             </div>

@@ -16,7 +16,6 @@ const persianNumberFormatter = new Intl.NumberFormat("fa-IR", {
 
 export function ScrollJourneySection() {
   const scope = useRef<HTMLElement | null>(null);
-  const activeIndexRef = useRef(0);
   const [activeEpisode, setActiveEpisode] = useState(0);
   const content = siteContent.journey;
 
@@ -29,182 +28,116 @@ export function ScrollJourneySection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-scroll-journey-item]", { opacity: 1, y: 0 });
-        gsap.set("[data-scroll-journey-mobile-fill]", { scaleY: 1 });
+        gsap.set("[data-scroll-journey-intro], [data-scroll-journey-item]", {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        gsap.set("[data-scroll-journey-fill]", { scaleY: 1 });
         return;
       }
 
-      gsap.set("[data-scroll-journey-mobile-fill]", {
-        scaleY: 0,
-        transformOrigin: "top center",
-      });
-
-      gsap.to("[data-scroll-journey-mobile-fill]", {
-        scaleY: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: scope.current,
-          start: "top 70%",
-          end: "bottom 40%",
-          scrub: true,
-        },
-      });
-
-      gsap.from("[data-scroll-journey-item]", {
-        opacity: 0,
-        y: 26,
-        duration: 0.65,
-        stagger: 0.07,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: scope.current,
-          start: "top 72%",
-        },
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-scroll-journey-item]").forEach((item, index) => {
-        ScrollTrigger.create({
-          trigger: item,
-          start: "top 72%",
-          end: "bottom 42%",
-          onEnter: () => setActiveEpisode(index),
-          onEnterBack: () => setActiveEpisode(index),
-        });
-      });
-
-      const media = gsap.matchMedia();
-
-      media.add("(min-width: 1024px)", () => {
-        const stage = scope.current?.querySelector<HTMLElement>("[data-scroll-journey-stage]");
-
-        if (!scope.current || !stage) {
-          return undefined;
-        }
-
-        const trigger = ScrollTrigger.create({
-          trigger: scope.current,
-          start: "top top",
-          end: () => `+=${content.steps.length * 390}`,
-          pin: stage,
-          scrub: 0.45,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const nextIndex = Math.min(
-              content.steps.length - 1,
-              Math.floor(self.progress * content.steps.length),
-            );
-
-            if (nextIndex !== activeIndexRef.current) {
-              activeIndexRef.current = nextIndex;
-              setActiveEpisode(nextIndex);
-            }
+      gsap.fromTo(
+        "[data-scroll-journey-intro]",
+        { opacity: 0, y: 26 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.72,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 74%",
           },
-        });
+        },
+      );
 
-        return () => trigger.kill();
+      gsap.fromTo(
+        "[data-scroll-journey-fill]",
+        { scaleY: 0, transformOrigin: "top center" },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 70%",
+            end: "bottom 42%",
+            scrub: 0.3,
+          },
+        },
+      );
+
+      ScrollTrigger.batch("[data-scroll-journey-item]", {
+        start: "top 84%",
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { opacity: 0, y: 28, scale: 0.97 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.62,
+              stagger: 0.07,
+              ease: "power3.out",
+              overwrite: true,
+            },
+          );
+        },
       });
 
-      return () => media.revert();
+      const triggers = gsap.utils
+        .toArray<HTMLElement>("[data-scroll-journey-item]")
+        .map((item, index) =>
+          ScrollTrigger.create({
+            trigger: item,
+            start: "top 68%",
+            end: "bottom 38%",
+            onEnter: () => setActiveEpisode(index),
+            onEnterBack: () => setActiveEpisode(index),
+          }),
+        );
+
+      return () => triggers.forEach((trigger) => trigger.kill());
     },
     { scope },
   );
-
-  const activeStep = content.steps[activeEpisode];
 
   return (
     <section
       ref={scope}
       id="journey"
-      className="relative px-5 py-10 sm:px-6 lg:min-h-screen lg:px-8 lg:py-0"
+      className="relative px-5 py-10 sm:px-6 lg:px-8 lg:py-16"
     >
-      <div
-        data-scroll-journey-stage=""
-        className="mx-auto flex w-full max-w-6xl flex-col justify-center lg:min-h-screen"
-      >
-        <div className="mb-6 max-w-3xl lg:mb-0">
+      <div className="mx-auto max-w-6xl">
+        <div data-scroll-journey-intro="" className="mb-6 max-w-3xl lg:mb-8">
           <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
             {content.title}
           </h2>
         </div>
 
-        <div className="hidden gap-8 lg:grid lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <div className="rounded-[2rem] border border-brand-purple/18 bg-white/[0.035] p-6">
-            <div className="mb-6 flex items-center justify-between text-xs font-black text-brand-gray">
-              <span>اپیزود فعال</span>
-              <span>
-                {persianNumberFormatter.format(activeEpisode + 1)} /{" "}
-                {persianNumberFormatter.format(content.steps.length)}
-              </span>
-            </div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div
-                className="h-full rounded-full bg-brand-purple shadow-glow transition-all duration-300"
-                style={{
-                  width: `${((activeEpisode + 1) / content.steps.length) * 100}%`,
-                }}
-              />
-            </div>
-
-            <div className="mt-10 min-h-[17rem] rounded-3xl border border-brand-purple/25 bg-ink/72 p-6">
-              <p className="font-poppins text-6xl font-black leading-none text-brand-purple">
-                {persianNumberFormatter.format(activeEpisode + 1)}
-              </p>
-              <p className="mt-5 text-sm font-black text-brand-purple/85">
-                اپیزود {persianNumberFormatter.format(activeEpisode + 1)}
-              </p>
-              <h3 className="mt-3 text-2xl font-black leading-10 text-brand-white">
-                {activeStep}
-              </h3>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            {content.steps.map((step, index) => {
-              const isActive = activeEpisode === index;
-              const isPassed = activeEpisode > index;
-
-              return (
-                <div
-                  key={step}
-                  className={`rounded-3xl border p-4 transition duration-300 ${
-                    isActive
-                      ? "border-brand-purple/65 bg-brand-purple/10 shadow-soft-purple"
-                      : isPassed
-                        ? "border-brand-purple/25 bg-white/[0.045]"
-                        : "border-brand-purple/12 bg-white/[0.025] opacity-60"
-                  }`}
-                >
-                  <p className="mb-2 text-xs font-black text-brand-purple">
-                    {persianNumberFormatter.format(index + 1)}
-                  </p>
-                  <p className="text-sm font-bold leading-7 text-brand-light">
-                    {step}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="relative lg:hidden">
-          <div className="absolute right-5 top-2 h-[calc(100%-1rem)] w-px bg-brand-purple/15" />
+        <div className="relative">
+          <div className="absolute right-5 top-2 h-[calc(100%-1rem)] w-px bg-brand-purple/15 lg:left-1/2 lg:right-auto lg:-translate-x-1/2" />
           <div
-            data-scroll-journey-mobile-fill=""
-            className="absolute right-5 top-2 h-[calc(100%-1rem)] w-px bg-brand-purple shadow-glow"
+            data-scroll-journey-fill=""
+            className="absolute right-5 top-2 h-[calc(100%-1rem)] w-px bg-brand-purple shadow-glow lg:left-1/2 lg:right-auto lg:-translate-x-1/2"
           />
-          <div className="space-y-3">
+
+          <div className="space-y-3 lg:space-y-6">
             {content.steps.map((step, index) => {
               const isActive = activeEpisode === index;
+              const isLeftDesktop = index % 2 === 0;
 
               return (
-                <div
+                <article
                   key={step}
                   data-scroll-journey-item=""
-                  className="relative pr-12"
+                  dir="ltr"
+                  className="relative pr-12 opacity-0 lg:grid lg:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] lg:items-start lg:gap-x-5 lg:pr-0"
                 >
                   <span
-                    className={`absolute right-1 top-3 z-10 flex size-8 items-center justify-center rounded-full border text-xs font-black transition ${
+                    className={`absolute right-1 top-3 z-10 flex size-8 items-center justify-center rounded-full border text-xs font-black transition lg:static lg:col-start-2 lg:mt-4 lg:size-9 lg:justify-self-center ${
                       isActive
                         ? "border-brand-purple bg-brand-purple text-brand-white shadow-glow"
                         : "border-brand-purple/35 bg-night text-brand-light"
@@ -213,20 +146,25 @@ export function ScrollJourneySection() {
                     {persianNumberFormatter.format(index + 1)}
                   </span>
                   <div
-                    className={`rounded-2xl border p-3.5 transition duration-300 ${
+                    dir="rtl"
+                    className={`rounded-2xl border p-3.5 transition duration-300 lg:row-start-1 lg:max-w-[31rem] lg:rounded-3xl lg:p-5 ${
+                      isLeftDesktop
+                        ? "lg:col-start-1 lg:justify-self-end"
+                        : "lg:col-start-3 lg:justify-self-start"
+                    } ${
                       isActive
-                        ? "border-brand-purple/55 bg-brand-purple/10"
+                        ? "border-brand-purple/55 bg-brand-purple/10 shadow-[0_18px_50px_rgba(143,0,255,0.16)]"
                         : "border-brand-purple/14 bg-white/[0.035]"
                     }`}
                   >
-                    <p className="mb-1 text-[0.68rem] font-black text-brand-purple">
+                    <p className="mb-1 text-[0.68rem] font-black text-brand-purple lg:text-xs">
                       اپیزود {persianNumberFormatter.format(index + 1)}
                     </p>
-                    <p className="text-sm font-bold leading-6 text-brand-light">
+                    <p className="text-sm font-bold leading-6 text-brand-light lg:text-base lg:leading-7">
                       {step}
                     </p>
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>

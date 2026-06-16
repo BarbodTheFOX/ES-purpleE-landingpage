@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { MouseEventHandler } from "react";
 import { cn } from "@/lib/utils";
 
 type ButtonProps = {
@@ -10,6 +11,7 @@ type ButtonProps = {
   disabled?: boolean;
   target?: string;
   rel?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 const variants = {
@@ -30,6 +32,7 @@ export function Button({
   disabled,
   target,
   rel,
+  onClick,
 }: ButtonProps) {
   const classes = cn(
     "inline-flex min-h-12 items-center justify-center rounded-full px-5 py-3 text-center text-sm font-bold transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
@@ -46,7 +49,7 @@ export function Button({
   }
 
   return (
-    <button type={type} disabled={disabled} className={classes}>
+    <button type={type} disabled={disabled} onClick={onClick} className={classes}>
       {children}
     </button>
   );

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
 import { GlassCard } from "@/components/ui/GlassCard";
 import {
@@ -43,10 +43,12 @@ export function RegistrationForm() {
   const [serverMessage, setServerMessage] = useState<string | null>(null);
   const [successType, setSuccessType] = useState<"first500" | "standard" | null>(null);
   const [showOptionalFields, setShowOptionalFields] = useState(false);
+  const [activeFormStep, setActiveFormStep] = useState(0);
 
   const {
     register,
     handleSubmit,
+    trigger,
     setError,
     reset,
     formState: { errors, isSubmitting },
@@ -131,6 +133,9 @@ export function RegistrationForm() {
               message,
             });
           });
+          moveToFirstProblemField(
+            Object.keys(payload.fields) as Array<keyof RegistrationFormValues>,
+          );
         }
 
         setServerMessage(payload.message);
@@ -154,6 +159,60 @@ export function RegistrationForm() {
     "mb-4 flex items-center gap-2 text-sm font-black text-brand-purple";
   const groupNumberClass =
     "flex size-7 shrink-0 items-center justify-center rounded-full bg-brand-purple/14 font-poppins text-xs text-brand-white";
+  const stepLabels = [
+    "نام و موبایل",
+    "UID بیتونیکس",
+    "سطح و چالش",
+    "تأیید نهایی",
+  ];
+
+  function getMobileStepClass(step: number) {
+    return activeFormStep === step ? "block" : "hidden md:block";
+  }
+
+  async function goToNextStep(fields: Array<keyof RegistrationFormValues>) {
+    const isValid = await trigger(fields);
+
+    if (isValid) {
+      setActiveFormStep((current) => Math.min(current + 1, stepLabels.length - 1));
+    }
+  }
+
+  function getStepForField(field: keyof RegistrationFormValues) {
+    if (field === "bitunix_uid") {
+      return 1;
+    }
+
+    if (field === "trading_level" || field === "main_challenge") {
+      return 2;
+    }
+
+    if (field === "registered_with_referral" || field === "consent") {
+      return 3;
+    }
+
+    return 0;
+  }
+
+  function moveToFirstProblemField(fields: Array<keyof RegistrationFormValues>) {
+    const firstField = fields[0];
+
+    if (
+      fields.some((field) =>
+        ["telegram_id", "instagram_id", "email"].includes(field),
+      )
+    ) {
+      setShowOptionalFields(true);
+    }
+
+    if (firstField) {
+      setActiveFormStep(getStepForField(firstField));
+    }
+  }
+
+  function handleInvalidSubmit(formErrors: FieldErrors<RegistrationFormValues>) {
+    moveToFirstProblemField(Object.keys(formErrors) as Array<keyof RegistrationFormValues>);
+  }
 
   return (
     <div id="registration" ref={scope} className="scroll-mt-24">
@@ -198,11 +257,39 @@ export function RegistrationForm() {
               </div>
             )}
 
-            <form className="space-y-3.5 sm:space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div data-form-group="" className={groupClass}>
+            <form
+              className="space-y-3.5 sm:space-y-4"
+              onSubmit={handleSubmit(onSubmit, handleInvalidSubmit)}
+              noValidate
+            >
+              <div className="md:hidden">
+                <div className="mb-3 flex items-center justify-between gap-2">
+                  {stepLabels.map((label, index) => {
+                    const isActive = activeFormStep === index;
+                    const isDone = activeFormStep > index;
+
+                    return (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => setActiveFormStep(index)}
+                        className={`h-1.5 flex-1 rounded-full transition ${
+                          isActive || isDone ? "bg-brand-purple" : "bg-white/12"
+                        }`}
+                        aria-label={label}
+                      />
+                    );
+                  })}
+                </div>
+                <p className="mb-3 text-xs font-black text-brand-light/75">
+                  مرحله {activeFormStep + 1} از ۴: {stepLabels[activeFormStep]}
+                </p>
+              </div>
+
+              <div data-form-group="" className={`${groupClass} ${getMobileStepClass(0)}`}>
                 <h3 className={groupTitleClass}>
                   <span className={groupNumberClass}>۱</span>
-                  اطلاعات اصلی
+                  {stepLabels[0]}
                 </h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label>
@@ -296,9 +383,16 @@ export function RegistrationForm() {
                     <FieldError message={errors.email?.message} />
                   </label>
                 </div>
+                <Button
+                  type="button"
+                  onClick={() => goToNextStep(["full_name", "phone"])}
+                  className="mt-4 w-full md:hidden"
+                >
+                  ادامه
+                </Button>
               </div>
 
-              <div data-form-group="" className={groupClass}>
+              <div data-form-group="" className={`${groupClass} ${getMobileStepClass(1)}`}>
                 <h3 className={groupTitleClass}>
                   <span className={groupNumberClass}>۲</span>
                   {content.groups.bitunix}
@@ -313,12 +407,29 @@ export function RegistrationForm() {
                   />
                   <FieldError message={errors.bitunix_uid?.message} />
                 </label>
+                <div className="mt-4 grid grid-cols-2 gap-3 md:hidden">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => setActiveFormStep(0)}
+                    className="w-full"
+                  >
+                    قبلی
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => goToNextStep(["bitunix_uid"])}
+                    className="w-full"
+                  >
+                    ادامه
+                  </Button>
+                </div>
               </div>
 
-              <div data-form-group="" className={groupClass}>
+              <div data-form-group="" className={`${groupClass} ${getMobileStepClass(2)}`}>
                 <h3 className={groupTitleClass}>
                   <span className={groupNumberClass}>۳</span>
-                  {content.groups.trading}
+                  {stepLabels[2]}
                 </h3>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label>
@@ -359,12 +470,29 @@ export function RegistrationForm() {
                     <FieldError message={errors.main_challenge?.message} />
                   </label>
                 </div>
+                <div className="mt-4 grid grid-cols-2 gap-3 md:hidden">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={() => setActiveFormStep(1)}
+                    className="w-full"
+                  >
+                    قبلی
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => goToNextStep(["trading_level", "main_challenge"])}
+                    className="w-full"
+                  >
+                    ادامه
+                  </Button>
+                </div>
               </div>
 
-              <div data-form-group="" className={`${groupClass} space-y-3`}>
+              <div data-form-group="" className={`${groupClass} ${getMobileStepClass(3)} space-y-3`}>
                 <h3 className={groupTitleClass}>
                   <span className={groupNumberClass}>۴</span>
-                  {content.groups.confirmation}
+                  {stepLabels[3]}
                 </h3>
                 <label className="flex items-start gap-3 rounded-2xl border border-brand-purple/14 bg-white/[0.035] p-3.5 sm:p-4">
                   <input
@@ -393,9 +521,21 @@ export function RegistrationForm() {
                     <FieldError message={errors.consent?.message} />
                   </span>
                 </label>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setActiveFormStep(2)}
+                  className="w-full md:hidden"
+                >
+                  قبلی
+                </Button>
               </div>
 
-              <Button type="submit" disabled={isSubmitting} className="w-full">
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className={`${activeFormStep === 3 ? "inline-flex" : "hidden"} w-full md:inline-flex`}
+              >
                 {isSubmitting ? content.submitting : content.submit}
               </Button>
               <p className="text-center text-xs font-bold leading-6 text-brand-gray">

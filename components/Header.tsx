@@ -38,12 +38,12 @@ export function Header() {
           rel={bitunixReferralUrl.startsWith("http") ? "noreferrer" : undefined}
           className="hidden md:inline-flex"
         >
-          <span>{siteContent.nav.cta}</span>
+          <span>ثبت‌نام با لینک Bitunix</span>
           <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
         </Button>
 
         <Button href="#registration" variant="secondary" className="md:hidden">
-          {siteContent.nav.cta}
+          ثبت UID
         </Button>
       </div>
     </header>

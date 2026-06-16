@@ -25,7 +25,7 @@ export const siteContent = {
       { label: "هدایا", href: "#rewards" },
       { label: "ثبت‌نام", href: "#registration" },
     ],
-    cta: "ورود به کمپین",
+    cta: "ثبت UID",
   },
   hero: {
     eyebrow: "کمپین آموزشی ایونتوم اسپیس",

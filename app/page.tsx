@@ -2,6 +2,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
+import { CampaignFlowStrip } from "@/components/CampaignFlowStrip";
 import { InteractiveRewardsSection } from "@/components/InteractiveRewardsSection";
 import { InteractiveUidGuideSection } from "@/components/InteractiveUidGuideSection";
 import { MiniRewardsStrip } from "@/components/MiniRewardsStrip";
@@ -17,6 +18,7 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
+        <CampaignFlowStrip />
         <MiniRewardsStrip />
         <InteractiveRewardsSection />
         <InteractiveUidGuideSection />

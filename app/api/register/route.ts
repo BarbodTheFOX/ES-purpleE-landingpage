@@ -86,16 +86,23 @@ export async function POST(request: Request) {
     }
 
     for (let attempt = 0; attempt <= MAX_REGISTRATION_NUMBER_RETRIES; attempt += 1) {
-      const { count, error: countError } = await supabase
+      const { data: latestRegistration, error: latestRegistrationError } = await supabase
         .from(tableName)
-        .select("id", { count: "exact", head: true })
-        .neq("status", "rejected");
+        .select("registration_number")
+        .not("registration_number", "is", null)
+        .order("registration_number", { ascending: false })
+        .limit(1)
+        .maybeSingle();
 
-      if (countError || count === null) {
+      if (latestRegistrationError) {
         return errorResponse(messages.capacityFailed, 500);
       }
 
-      const registrationNumber = RESERVED_SLOTS + count + 1;
+      const registrationNumber =
+        latestRegistration?.registration_number !== undefined &&
+        latestRegistration.registration_number !== null
+          ? latestRegistration.registration_number + 1
+          : RESERVED_SLOTS + 1;
       const isFirst500 = registrationNumber <= PREMIUM_CAPACITY;
 
       const { error: insertError } = await supabase.from(tableName).insert({
