@@ -18,6 +18,7 @@ export function ScrollJourneySection() {
   const scope = useRef<HTMLElement | null>(null);
   const [activeEpisode, setActiveEpisode] = useState(0);
   const content = siteContent.journey;
+  const episodes = content.episodes || content.steps.map((step) => ({ topic: step, outcome: "" }));
 
   useGSAP(
     () => {
@@ -115,6 +116,11 @@ export function ScrollJourneySection() {
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
             {content.title}
           </h2>
+          {"subtitle" in content && (
+            <p className="mt-4 text-sm font-bold leading-7 text-brand-light/78 sm:text-base sm:leading-8">
+              {content.subtitle}
+            </p>
+          )}
         </div>
 
         <div className="relative">
@@ -125,13 +131,13 @@ export function ScrollJourneySection() {
           />
 
           <div className="space-y-3 lg:space-y-6">
-            {content.steps.map((step, index) => {
+            {episodes.map((episode, index) => {
               const isActive = activeEpisode === index;
               const isLeftDesktop = index % 2 === 0;
 
               return (
                 <article
-                  key={step}
+                  key={episode.topic}
                   data-scroll-journey-item=""
                   dir="ltr"
                   className="relative pr-12 opacity-0 lg:grid lg:grid-cols-[minmax(0,1fr)_2.5rem_minmax(0,1fr)] lg:items-start lg:gap-x-5 lg:pr-0"
@@ -160,8 +166,11 @@ export function ScrollJourneySection() {
                     <p className="mb-1 text-[0.68rem] font-black text-brand-purple lg:text-xs">
                       اپیزود {persianNumberFormatter.format(index + 1)}
                     </p>
-                    <p className="text-sm font-bold leading-6 text-brand-light lg:text-base lg:leading-7">
-                      {step}
+                    <h3 className="text-sm font-black leading-7 text-brand-white lg:text-base">
+                      {episode.topic}
+                    </h3>
+                    <p className="mt-2 text-xs font-bold leading-6 text-brand-light/72 lg:text-sm lg:leading-7">
+                      {episode.outcome}
                     </p>
                   </div>
                 </article>

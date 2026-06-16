@@ -43,7 +43,7 @@ export function FAQSection() {
   );
 
   return (
-    <Section eyebrow={content.eyebrow} title={content.title}>
+    <Section id="faq" eyebrow={content.eyebrow} title={content.title}>
       <div ref={scope} className="space-y-3">
         {content.items.map((item, index) => (
           <div key={item.question} data-faq-item="">

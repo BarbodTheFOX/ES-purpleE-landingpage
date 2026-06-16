@@ -9,7 +9,6 @@ import {
   ScrollTrigger,
   useGSAP,
 } from "@/lib/gsap/client";
-import { siteContent } from "@/lib/content";
 
 export function StickyMobileCTA() {
   const scope = useRef<HTMLAnchorElement | null>(null);
@@ -56,7 +55,7 @@ export function StickyMobileCTA() {
           : "translate-y-0 opacity-100"
       }`}
     >
-      {siteContent.hero.primaryCta}
+      ثبت UID و بررسی ظرفیت
       <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
     </a>
   );

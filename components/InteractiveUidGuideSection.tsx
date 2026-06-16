@@ -106,7 +106,11 @@ export function InteractiveUidGuideSection() {
   );
 
   return (
-    <section ref={scope} className="relative px-5 py-10 sm:px-6 lg:px-8 lg:py-16">
+    <section
+      ref={scope}
+      id="how-to-join"
+      className="relative px-5 py-10 sm:px-6 lg:px-8 lg:py-16"
+    >
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
           <div data-uid-intro="">

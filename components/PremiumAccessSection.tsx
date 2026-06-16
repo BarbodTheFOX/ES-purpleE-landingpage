@@ -89,6 +89,11 @@ export function PremiumAccessSection() {
   return (
     <Section id="premium-access" eyebrow={content.eyebrow} title={content.title}>
       <div ref={scope}>
+        {"intro" in content && (
+          <p className="mb-5 max-w-3xl text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
+            {content.intro}
+          </p>
+        )}
         <GlassCard className="relative overflow-hidden border-brand-purple/20 p-5 sm:p-8">
           <div className="relative mb-6 flex items-center gap-3">
             <span className="h-px flex-1 bg-gradient-to-l from-brand-purple/55 to-transparent" />

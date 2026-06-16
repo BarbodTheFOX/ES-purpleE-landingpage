@@ -11,12 +11,12 @@ import {
 export function MiniRewardsStrip() {
   const scope = useRef<HTMLElement | null>(null);
   const featuredStats = [
-    { value: "۸ اپیزود", label: "مسیر آموزشی" },
     { value: "۲ BNB", label: "جایزه اصلی" },
     { value: "۱۶ SOL", label: "جایزه کریپتویی" },
-    { value: "۲۴ × ۵۰ دلار", label: "بونوس" },
-    { value: "تا ۲۰۰ VIP", label: "Level 3" },
+    { value: "۲۴ جایزه ۵۰ دلاری", label: "بونوس" },
+    { value: "تا ۲۰۰ VIP Level 3", label: "دسترسی ویژه" },
     { value: "۶ نفر ورکشاپ", label: "منتخب Eventum" },
+    { value: "پکیج PDF پرمیوم", label: "برای ثبت‌نام معتبر" },
   ];
 
   useGSAP(

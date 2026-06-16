@@ -57,7 +57,16 @@ export function ProblemSection() {
 
   return (
     <Section eyebrow={content.eyebrow} title={content.title}>
-      <div ref={scope} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div ref={scope} className="space-y-5">
+        {"text" in content && (
+          <p
+            data-problem-card=""
+            className="max-w-4xl text-sm font-bold leading-8 text-brand-light/82 sm:text-base"
+          >
+            {content.text}
+          </p>
+        )}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {content.items.map((item, index) => (
           <div key={item.title} data-problem-card="">
             <GlassCard className="h-full transition-shadow duration-300 hover:shadow-glow">
@@ -71,6 +80,7 @@ export function ProblemSection() {
             </GlassCard>
           </div>
         ))}
+        </div>
       </div>
     </Section>
   );

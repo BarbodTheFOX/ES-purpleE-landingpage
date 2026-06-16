@@ -541,6 +541,24 @@ export function RegistrationForm() {
               <p className="text-center text-xs font-bold leading-6 text-brand-gray">
                 {content.submitNote}
               </p>
+              <div className="rounded-2xl border border-brand-purple/12 bg-white/[0.025] p-4">
+                <h3 className="text-sm font-black text-brand-white">
+                  {content.afterSubmit.title}
+                </h3>
+                <ol className="mt-3 space-y-2">
+                  {content.afterSubmit.items.map((item, index) => (
+                    <li
+                      key={item}
+                      className="flex gap-2 text-xs font-bold leading-6 text-brand-light/78"
+                    >
+                      <span className="font-poppins text-brand-purple">
+                        {(index + 1).toLocaleString("fa-IR", { useGrouping: false })}.
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </form>
           </GlassCard>
       </div>
