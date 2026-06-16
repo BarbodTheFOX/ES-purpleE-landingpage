@@ -35,7 +35,7 @@ export function StickyMobileCTA() {
 
       const trigger = ScrollTrigger.create({
         trigger: "#registration",
-        start: "top 82%",
+        start: "top bottom",
         end: "bottom bottom",
         onEnter: () => setIsNearForm(true),
         onLeaveBack: () => setIsNearForm(false),

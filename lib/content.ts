@@ -31,7 +31,7 @@ export const siteContent = {
     eyebrow: "کمپین آموزشی ایونتوم اسپیس",
     title: "ذهنیت تریدر را وارد مرحله بعد کن",
     subtitle:
-      "Purple Evolution یک مسیر ۸ قسمتی از Eventum Space درباره روانشناسی ترید، کنترل هیجان، تصمیم‌گیری، مدیریت ریسک و اشتباهات پنهانی است که روی عملکرد تریدر اثر می‌گذارند.",
+      "Purple Evolution یک مسیر ۸ قسمتی درباره روانشناسی ترید، کنترل هیجان و تصمیم‌گیری بهتر در بازار است.",
     supportLine: "با حمایت Bitunix",
     primaryCta: "ثبت UID و ورود به مسیر",
     referralCta: "ثبت‌نام با لینک Bitunix",
@@ -192,6 +192,8 @@ export const siteContent = {
     title: "UID بیتونیکس خود را ثبت کنید",
     subtitle:
       "برای ورود به مسیر، ابتدا با لینک Bitunix ثبت‌نام کنید و سپس UID حساب خود را اینجا وارد کنید.",
+    instruction:
+      "اول با لینک اختصاصی Eventum در Bitunix ثبت‌نام کن، UID حساب خودت را بردار و همینجا ثبت کن.",
     groups: {
       personal: "اطلاعات تماس",
       bitunix: "حساب Bitunix",
