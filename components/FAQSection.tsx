@@ -46,16 +46,29 @@ export function FAQSection() {
   return (
     <Section id="faq" eyebrow={content.eyebrow} title={content.title}>
       <div ref={scope} className="space-y-3">
-        {content.items.map((item, index) => (
+        {content.items.map((item) => (
           <div key={item.question} data-faq-item="">
             <details className="group rounded-2xl border border-white/10 bg-white/[0.055] p-5 open:bg-white/[0.075]">
               <summary className="cursor-pointer list-none text-base font-black text-brand-white">
-                <span className="flex items-center justify-between gap-4">
-                  <MixedText text={item.question} />
-                  <span className="text-brand-purple transition group-open:rotate-45">+</span>
+                <span className="flex items-start justify-between gap-4">
+                  <span
+                    dir="rtl"
+                    className="min-w-0 flex-1 whitespace-normal text-right leading-7"
+                  >
+                    <MixedText text={item.question} />
+                  </span>
+                  <span
+                    className="shrink-0 text-brand-purple transition group-open:rotate-45"
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
                 </span>
               </summary>
-              <p className="mt-4 text-sm leading-7 text-brand-light/75">
+              <p
+                dir="rtl"
+                className="mt-4 whitespace-normal text-right text-sm leading-7 text-brand-light/75"
+              >
                 <MixedText text={item.answer} />
               </p>
             </details>
