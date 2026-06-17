@@ -1,5 +1,6 @@
 export const bitunixReferralUrl =
-  process.env.NEXT_PUBLIC_BITUNIX_REFERRAL_URL || "#registration";
+  process.env.NEXT_PUBLIC_BITUNIX_REFERRAL_URL ||
+  "https://www.bitunix.com/register?vipCode=Eventum";
 
 export const tradingLevels = ["مبتدی", "متوسط", "حرفه‌ای"] as const;
 
@@ -33,12 +34,12 @@ export const siteContent = {
     eyebrow: "کمپین ویژه Eventum Space با حمایت Bitunix",
     title: "وارد Purple Evolution شو برای جوایز و هدایای اختصاصی",
     subtitle:
-      "با ثبت‌نام معتبر، شانس دریافت ۲ BNB، ۱۶ SOL، بونوس‌های ۵۰ دلاری، VIP Level 3 و دسترسی به VIP Channel رو داری.",
+      "با ثبت‌نام، شانس دریافت ۲ BNB، ۱۶ SOL، بونوس‌های ۵۰ دلاری، VIP Level 3 و دسترسی به VIP Channel رو داری.",
     supportLine: "با حمایت Bitunix",
     primaryCta: "همین حالا ثبت‌نام کن",
     referralCta: "جوایز رو ببین",
     capacity: "۴۰۰ ظرفیت عمومی برای VIP Channel فعال می‌شه.",
-    note: "همه ثبت‌نام‌کننده‌های معتبر هم به ۳ فایل اختصاصی Eventum دسترسی می‌گیرن.",
+    note: "همه ثبت‌نام‌کننده‌ها هم به ۳ فایل اختصاصی Eventum دسترسی می‌گیرن.",
     stats: ["۲ BNB", "۱۶ SOL", "۲۴ بونوس ۵۰ دلاری", "VIP Level 3 در هر اپیزود", "۳ PDF اختصاصی", "۴۰۰ ظرفیت VIP"],
     visual: {
       centerNumber: "۸",

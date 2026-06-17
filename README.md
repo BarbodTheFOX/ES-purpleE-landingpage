@@ -24,7 +24,7 @@ Create `.env.local`:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
-NEXT_PUBLIC_BITUNIX_REFERRAL_URL=
+NEXT_PUBLIC_BITUNIX_REFERRAL_URL=https://www.bitunix.com/register?vipCode=Eventum
 ```
 
 `SUPABASE_SERVICE_ROLE_KEY` is used only in `app/api/register/route.ts` and must never be exposed to the browser.

@@ -201,14 +201,16 @@ export function HeroSection() {
             <h1
               data-hero-reveal=""
               aria-label={content.title}
-              className="max-w-4xl text-[1.72rem] font-black leading-tight tracking-tight text-brand-white min-[380px]:text-[1.9rem] sm:text-5xl lg:text-[3.55rem] xl:text-[4rem]"
+              className="max-w-4xl text-[2.05rem] font-black leading-[1.04] tracking-tight text-brand-white min-[380px]:text-[2.2rem] sm:text-5xl sm:leading-[1.03] lg:text-[3.45rem] xl:text-[3.9rem]"
             >
-              <span className="block">
-                <span>وارد </span>
-                <span className="inline-block whitespace-nowrap">Purple Evolution</span>
-                <span> شو</span>
+              <span className="block">وارد</span>
+              <span className="block whitespace-nowrap" dir="ltr">
+                Purple Evolution
               </span>
-              <span className="mt-1 block">برای جوایز و هدایای اختصاصی</span>
+              <span className="block">شو</span>
+              <span className="mt-2 block whitespace-nowrap text-[0.68em] leading-[1.18] min-[380px]:text-[0.7em] sm:mt-3 sm:text-[0.72em] lg:text-[0.74em]">
+                برای جوایز و هدایای اختصاصی
+              </span>
             </h1>
             <p
               data-hero-reveal=""
