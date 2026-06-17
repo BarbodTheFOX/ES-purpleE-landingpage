@@ -5,6 +5,7 @@ import { ChevronDown, ExternalLink } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm, type FieldErrors } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { GlassCard } from "@/components/ui/GlassCard";
 import {
   bitunixReferralUrl,
@@ -23,6 +24,7 @@ import {
   registerGsap,
   useGSAP,
 } from "@/lib/gsap/client";
+import { normalizeDigits } from "@/lib/utils/normalizeDigits";
 import type { RegistrationResponse } from "@/types/registration";
 
 function FieldError({ message }: { message?: string }) {
@@ -223,12 +225,14 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
       <div data-form-panel="">
           <GlassCard className="border-brand-purple/20 p-3.5 shadow-[0_18px_55px_rgba(143,0,255,0.16)] sm:p-5">
             <div className="mb-4 rounded-2xl border border-brand-purple/16 bg-brand-purple/[0.08] p-3.5 sm:p-4">
-              <p className="text-xs font-black text-brand-purple">{content.eyebrow}</p>
+              <p className="text-xs font-black text-brand-purple">
+                <MixedText text={content.eyebrow} />
+              </p>
               <h2 className="mt-2 text-lg font-black leading-8 text-brand-white sm:text-xl">
-                {content.title}
+                <MixedText text={content.title} />
               </h2>
               <p className="mt-2 text-sm leading-7 text-brand-light/80">
-                {content.instruction}
+                <MixedText text={content.instruction} />
               </p>
               <Button
                 href={bitunixReferralUrl}
@@ -237,7 +241,7 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                 variant="secondary"
                 className="mt-4 w-full border-brand-purple/35 bg-ink/70"
               >
-                {content.referralLink}
+                <MixedText text={content.referralLink} />
                 <ExternalLink className="mr-2 size-4" aria-hidden="true" />
               </Button>
             </div>
@@ -247,10 +251,14 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                   {content.successTitle}
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-brand-light/85">
-                  {serverMessage ||
-                    (successType === "first500"
-                      ? content.first500Success
-                      : content.standardSuccess)}
+                  <MixedText
+                    text={
+                      serverMessage ||
+                      (successType === "first500"
+                        ? content.first500Success
+                        : content.standardSuccess)
+                    }
+                  />
                 </p>
                 <Button href="/gifts" variant="secondary" className="mt-4 w-full border-brand-green/30 bg-brand-green/10 text-brand-green">
                   {content.successCta}
@@ -313,12 +321,12 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                   <label>
                     <span className={labelClass}>{content.fields.phone.label}</span>
                     <input
-                      className={inputClass}
+                      className={`${inputClass} text-left`}
                       placeholder={content.fields.phone.placeholder}
                       inputMode="tel"
                       autoComplete="tel"
                       dir="ltr"
-                      {...register("phone")}
+                      {...register("phone", { setValueAs: normalizeDigits })}
                     />
                     <FieldError message={errors.phone?.message} />
                   </label>
@@ -407,10 +415,10 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                 <label>
                   <span className={labelClass}>{content.fields.bitunix_uid.label}</span>
                   <input
-                    className={inputClass}
+                    className={`${inputClass} text-left`}
                     placeholder={content.fields.bitunix_uid.placeholder}
                     dir="ltr"
-                    {...register("bitunix_uid")}
+                    {...register("bitunix_uid", { setValueAs: normalizeDigits })}
                   />
                   <FieldError message={errors.bitunix_uid?.message} />
                 </label>
@@ -509,7 +517,7 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                   />
                   <span>
                     <span className="text-sm font-bold leading-7 text-brand-light">
-                      {content.fields.registered_with_referral}
+                      <MixedText text={content.fields.registered_with_referral} />
                     </span>
                     <FieldError message={errors.registered_with_referral?.message} />
                   </span>
@@ -523,7 +531,7 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                   />
                   <span>
                     <span className="text-sm font-bold leading-7 text-brand-light">
-                      {content.fields.consent}
+                      <MixedText text={content.fields.consent} />
                     </span>
                     <FieldError message={errors.consent?.message} />
                   </span>
@@ -546,11 +554,11 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                 {isSubmitting ? content.submitting : content.submit}
               </Button>
               <p className="text-center text-xs font-bold leading-6 text-brand-gray">
-                {content.submitNote}
+                <MixedText text={content.submitNote} />
               </p>
               <div className="rounded-2xl border border-brand-purple/12 bg-white/[0.025] p-4">
                 <h3 className="text-sm font-black text-brand-white">
-                  {content.afterSubmit.title}
+                  <MixedText text={content.afterSubmit.title} />
                 </h3>
                 <ol className="mt-3 space-y-2">
                   {content.afterSubmit.items.map((item, index) => (
@@ -561,7 +569,9 @@ export function RegistrationForm({ id = "registration" }: RegistrationFormProps)
                       <span className="font-poppins text-brand-purple">
                         {(index + 1).toLocaleString("fa-IR", { useGrouping: false })}.
                       </span>
-                      <span>{item}</span>
+                      <span>
+                        <MixedText text={item} />
+                      </span>
                     </li>
                   ))}
                 </ol>

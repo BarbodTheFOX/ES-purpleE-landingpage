@@ -72,6 +72,10 @@ button {
   backdrop-filter: blur(20px);
 }
 
+.unicode-bidi-isolate {
+  unicode-bidi: isolate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

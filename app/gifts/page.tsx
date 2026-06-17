@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, LockKeyhole } from "lucide-react";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
 export default function GiftsPage() {
@@ -20,15 +21,17 @@ export default function GiftsPage() {
 
         <section className="mt-10 grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
           <div>
-            <p className="mb-3 text-sm font-bold text-brand-purple">Purple Evolution</p>
+            <p className="mb-3 text-sm font-bold text-brand-purple">
+              <MixedText text="Purple Evolution" />
+            </p>
             <h1 className="text-3xl font-black leading-tight sm:text-5xl">
-              {content.title}
+              <MixedText text={content.title} />
             </h1>
             <p className="mt-5 text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
-              {content.subtitle}
+              <MixedText text={content.subtitle} />
             </p>
             <p className="mt-5 rounded-2xl border border-brand-yellow/25 bg-brand-yellow/10 p-4 text-sm font-black leading-7 text-brand-yellow">
-              {content.notice}
+              <MixedText text={content.notice} />
             </p>
           </div>
 
@@ -62,9 +65,11 @@ export default function GiftsPage() {
                 </span>
                 <LockKeyhole className="size-4 text-brand-gray" aria-hidden="true" />
               </div>
-              <h2 className="text-base font-black leading-7">{card.title}</h2>
+              <h2 className="text-base font-black leading-7">
+                <MixedText text={card.title} />
+              </h2>
               <p className="mt-3 text-sm font-bold leading-7 text-brand-light/72">
-                {card.text}
+                <MixedText text={card.text} />
               </p>
               <span className="mt-5 inline-flex rounded-full border border-brand-yellow/25 bg-brand-yellow/10 px-3 py-1 text-xs font-black text-brand-yellow">
                 {giftsContent.pending}

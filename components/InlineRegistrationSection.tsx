@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { RegistrationForm } from "@/components/RegistrationForm";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
 export function InlineRegistrationSection() {
@@ -12,12 +13,14 @@ export function InlineRegistrationSection() {
       <div className="absolute inset-x-0 top-1/2 -z-10 h-40 bg-brand-purple/[0.06] blur-3xl" />
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
         <div className="lg:sticky lg:top-24">
-          <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
+          <p className="mb-3 text-sm font-bold text-brand-purple">
+            <MixedText text={content.eyebrow} />
+          </p>
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl">
-            {content.title}
+            <MixedText text={content.title} />
           </h2>
           <p className="mt-4 text-sm font-bold leading-7 text-brand-light/80 sm:text-base sm:leading-8">
-            {content.text}
+            <MixedText text={content.text} />
           </p>
           <div className="mt-6 hidden overflow-hidden rounded-[2rem] border border-brand-purple/16 bg-white/[0.035] p-5 lg:block">
             <Image

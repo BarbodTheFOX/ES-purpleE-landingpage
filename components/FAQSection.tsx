@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -50,11 +51,13 @@ export function FAQSection() {
             <details className="group rounded-2xl border border-white/10 bg-white/[0.055] p-5 open:bg-white/[0.075]">
               <summary className="cursor-pointer list-none text-base font-black text-brand-white">
                 <span className="flex items-center justify-between gap-4">
-                  {item.question}
+                  <MixedText text={item.question} />
                   <span className="text-brand-purple transition group-open:rotate-45">+</span>
                 </span>
               </summary>
-              <p className="mt-4 text-sm leading-7 text-brand-light/75">{item.answer}</p>
+              <p className="mt-4 text-sm leading-7 text-brand-light/75">
+                <MixedText text={item.answer} />
+              </p>
             </details>
           </div>
         ))}

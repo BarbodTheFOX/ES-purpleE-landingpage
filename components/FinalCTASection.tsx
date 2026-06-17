@@ -3,6 +3,7 @@
 import { ArrowLeft, Gift } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import {
   gsap,
   prefersReducedMotion,
@@ -47,12 +48,14 @@ export function FinalCTASection() {
     <section ref={scope} className="px-5 py-10 sm:px-6 lg:px-8 lg:py-16">
       <div className="mx-auto max-w-6xl rounded-[2rem] border border-brand-purple/20 bg-gradient-to-br from-brand-purple/12 to-white/[0.025] p-5 sm:p-8">
         <div data-final-cta="" className="max-w-3xl">
-          <p className="text-xs font-black text-brand-purple">Purple Evolution</p>
+          <p className="text-xs font-black text-brand-purple">
+            <MixedText text="Purple Evolution" />
+          </p>
           <h2 className="mt-3 text-2xl font-black leading-tight text-brand-white sm:text-4xl">
-            {content.title}
+            <MixedText text={content.title} />
           </h2>
           <p className="mt-4 text-sm font-bold leading-7 text-brand-light/82 sm:text-base sm:leading-8">
-            {content.text}
+            <MixedText text={content.text} />
           </p>
         </div>
         <div data-final-cta="" className="mt-7 flex flex-col gap-3 sm:flex-row">

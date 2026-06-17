@@ -2,6 +2,7 @@
 
 import { AlertTriangle } from "lucide-react";
 import { useRef } from "react";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -55,7 +56,11 @@ export function ProblemSection() {
   );
 
   return (
-    <Section eyebrow={content.eyebrow} title={content.title}>
+    <Section
+      eyebrow={content.eyebrow}
+      title={content.title}
+      className="pb-5 sm:pb-6 lg:pb-6"
+    >
       <div ref={scope} className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
         {"text" in content && (
           <div
@@ -63,10 +68,10 @@ export function ProblemSection() {
             className="rounded-[2rem] border border-brand-purple/18 bg-gradient-to-br from-brand-purple/10 to-white/[0.025] p-5 sm:p-7"
           >
             <p className="text-xl font-black leading-10 text-brand-white sm:text-3xl sm:leading-[1.6]">
-              {content.statement}
+              <MixedText text={content.statement} />
             </p>
             <p className="mt-5 text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
-              {content.text}
+              <MixedText text={content.text} />
             </p>
           </div>
         )}
@@ -82,9 +87,11 @@ export function ProblemSection() {
                 className="mb-3 size-5 text-brand-purple"
                 aria-hidden="true"
               />
-              <h3 className="text-base font-black text-brand-white">{item.title}</h3>
+              <h3 className="text-base font-black text-brand-white">
+                <MixedText text={item.title} />
+              </h3>
               <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75">
-                {item.text}
+                <MixedText text={item.text} />
               </p>
             </div>
           ))}

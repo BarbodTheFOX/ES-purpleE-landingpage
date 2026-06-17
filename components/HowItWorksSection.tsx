@@ -3,6 +3,7 @@
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -120,9 +121,11 @@ export function HowItWorksSection() {
                       <ArrowLeft className="hidden size-5 text-brand-purple/70 lg:block" />
                     )}
                   </div>
-                  <h3 className="text-lg font-black text-brand-white">{step.title}</h3>
+                  <h3 className="text-lg font-black text-brand-white">
+                    <MixedText text={step.title} />
+                  </h3>
                   <p className="mt-3 text-sm leading-7 text-brand-light/75">
-                    {step.text}
+                    <MixedText text={step.text} />
                   </p>
                   {isActive && (
                     <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-brand-purple/25 bg-brand-purple/10 px-3 py-1 text-xs font-black text-brand-light">
@@ -140,7 +143,7 @@ export function HowItWorksSection() {
             {content.cta}
           </Button>
           <p className="text-sm font-bold leading-7 text-brand-gray">
-            {content.microCopy}
+            <MixedText text={content.microCopy} />
           </p>
         </div>
       </div>

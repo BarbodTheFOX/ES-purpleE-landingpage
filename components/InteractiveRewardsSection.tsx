@@ -9,6 +9,7 @@ import {
   ScrollTrigger,
   useGSAP,
 } from "@/lib/gsap/client";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
 const persianNumberFormatter = new Intl.NumberFormat("fa-IR", {
@@ -111,12 +112,14 @@ export function InteractiveRewardsSection() {
     >
       <div className="mx-auto max-w-6xl">
         <div data-reward-intro="" className="mb-7 max-w-3xl lg:mb-10">
-          <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
+          <p className="mb-3 text-sm font-bold text-brand-purple">
+            <MixedText text={content.eyebrow} />
+          </p>
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
-            {content.title}
+            <MixedText text={content.title} />
           </h2>
           <p className="mt-4 text-sm font-bold leading-7 text-brand-light/80 sm:text-base sm:leading-8">
-            {content.intro}
+            <MixedText text={content.intro} />
           </p>
         </div>
 
@@ -156,18 +159,18 @@ export function InteractiveRewardsSection() {
                   </span>
                   {"eligibility" in featured && (
                     <span className="rounded-full border border-brand-purple/25 bg-ink/60 px-4 py-2 text-xs font-black text-brand-light">
-                      {featured.eligibility}
+                      <MixedText text={featured.eligibility} />
                     </span>
                   )}
                 </div>
                 <p className="font-poppins text-6xl font-black leading-none text-brand-white">
-                  {featured.value}
+                  <MixedText text={featured.value} />
                 </p>
                 <h3 className="mt-6 text-2xl font-black text-brand-white">
-                  {featured.title}
+                  <MixedText text={featured.title} />
                 </h3>
                 <p className="mt-5 max-w-2xl text-sm font-bold leading-8 text-brand-light/78">
-                  {featured.text}
+                  <MixedText text={featured.text} />
                 </p>
               </article>
             );
@@ -195,19 +198,19 @@ export function InteractiveRewardsSection() {
                   <div>
                     <div className="flex flex-wrap items-center gap-3">
                       <p className="font-poppins text-2xl font-black text-brand-white">
-                        {card.value}
+                        <MixedText text={card.value} />
                       </p>
                       {"eligibility" in card && (
                         <span className="rounded-full border border-brand-purple/20 bg-brand-purple/10 px-3 py-1 text-[0.68rem] font-black text-brand-light">
-                          {card.eligibility}
+                          <MixedText text={card.eligibility} />
                         </span>
                       )}
                     </div>
                     <h3 className="mt-2 text-base font-black text-brand-white">
-                      {card.title}
+                      <MixedText text={card.title} />
                     </h3>
                     <p className="mt-2 text-sm font-bold leading-7 text-brand-light/72">
-                      {card.text}
+                      <MixedText text={card.text} />
                     </p>
                   </div>
                 </article>
@@ -262,18 +265,20 @@ export function InteractiveRewardsSection() {
                   </span>
                 </div>
                 <p className="font-poppins text-2xl font-black text-brand-purple">
-                  {card.value}
+                  <MixedText text={card.value} />
                 </p>
-                <h3 className="mt-3 text-lg font-black text-brand-white">{card.title}</h3>
+                <h3 className="mt-3 text-lg font-black text-brand-white">
+                  <MixedText text={card.title} />
+                </h3>
                 <p className="mt-3 text-sm font-bold leading-7 text-brand-light/78 sm:hidden">
-                  {mobileRewardTexts[index]}
+                  <MixedText text={mobileRewardTexts[index]} />
                 </p>
                 <p className="mt-3 hidden text-sm font-bold leading-7 text-brand-light/78 sm:block">
-                  {card.text}
+                  <MixedText text={card.text} />
                 </p>
                 {"eligibility" in card && (
                   <span className="mt-4 inline-flex rounded-full border border-brand-purple/20 bg-brand-purple/10 px-3 py-1 text-xs font-black text-brand-light">
-                    {card.eligibility}
+                    <MixedText text={card.eligibility} />
                   </span>
                 )}
               </article>

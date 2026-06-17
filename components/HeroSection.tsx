@@ -5,6 +5,7 @@ import { ExternalLink, Gift, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { RegistrationForm } from "@/components/RegistrationForm";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import {
   gsap,
   prefersReducedMotion,
@@ -183,7 +184,7 @@ export function HeroSection() {
                     data-hero-reveal=""
                     className="rounded-2xl border border-brand-purple/14 bg-ink/70 px-2.5 py-2 font-poppins text-[0.68rem] font-black text-brand-light sm:px-3 sm:text-xs"
                   >
-                    {stat}
+                    <MixedText text={stat} />
                   </span>
                 ))}
               </div>
@@ -196,7 +197,7 @@ export function HeroSection() {
               className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-purple/25 bg-white/[0.045] px-3 py-1.5 text-xs font-bold text-brand-light sm:px-4 sm:py-2 sm:text-sm"
             >
               <Gift className="size-4 text-brand-purple" aria-hidden="true" />
-              {content.eyebrow}
+              <MixedText text={content.eyebrow} />
             </p>
             <h1
               data-hero-reveal=""
@@ -216,10 +217,10 @@ export function HeroSection() {
               data-hero-reveal=""
               className="mt-4 max-w-2xl text-sm font-bold leading-7 text-brand-light/86 sm:text-lg sm:leading-9"
             >
-              {content.subtitle}
+              <MixedText text={content.subtitle} />
             </p>
             <p data-hero-reveal="" className="mt-3 text-sm font-black text-brand-purple">
-              {content.supportLine}
+              <MixedText text={content.supportLine} />
             </p>
 
             <div data-hero-reveal="" className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -244,9 +245,11 @@ export function HeroSection() {
               className="mt-5 flex flex-col gap-2 text-sm text-brand-light/76 sm:mt-7 sm:flex-row sm:items-center"
             >
               <span className="rounded-full border border-brand-yellow/32 bg-brand-yellow/10 px-4 py-2 font-black text-brand-yellow">
-                {content.capacity}
+                <MixedText text={content.capacity} />
               </span>
-              <span>{content.note}</span>
+              <span>
+                <MixedText text={content.note} />
+              </span>
             </div>
 
             <a
@@ -256,7 +259,7 @@ export function HeroSection() {
               rel={bitunixReferralUrl.startsWith("http") ? "noreferrer" : undefined}
               className="mt-5 inline-flex items-center text-sm font-black text-brand-light/78 transition hover:text-brand-white"
             >
-              ثبت‌نام در Bitunix با لینک Eventum
+              <MixedText text="ثبت‌نام در Bitunix با لینک Eventum" />
               <ExternalLink className="mr-2 size-4 text-brand-purple" aria-hidden="true" />
             </a>
           </div>
@@ -276,8 +279,12 @@ export function HeroSection() {
           >
             <div className="sticky top-0 z-10 mb-4 flex items-center justify-between rounded-2xl border border-brand-purple/14 bg-ink/90 p-3 backdrop-blur">
               <div>
-                <p className="text-xs font-black text-brand-purple">Purple Evolution</p>
-                <p className="text-sm font-black text-brand-white">ثبت‌نام Purple Evolution</p>
+                <p className="text-xs font-black text-brand-purple">
+                  <MixedText text="Purple Evolution" />
+                </p>
+                <p className="text-sm font-black text-brand-white">
+                  <MixedText text="ثبت‌نام Purple Evolution" />
+                </p>
               </div>
               <button
                 type="button"

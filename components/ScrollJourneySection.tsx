@@ -8,6 +8,7 @@ import {
   ScrollTrigger,
   useGSAP,
 } from "@/lib/gsap/client";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
 const persianNumberFormatter = new Intl.NumberFormat("fa-IR", {
@@ -112,13 +113,15 @@ export function ScrollJourneySection() {
     >
       <div className="mx-auto max-w-6xl">
         <div data-scroll-journey-intro="" className="mb-6 max-w-3xl lg:mb-8">
-          <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
+          <p className="mb-3 text-sm font-bold text-brand-purple">
+            <MixedText text={content.eyebrow} />
+          </p>
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
-            {content.title}
+            <MixedText text={content.title} />
           </h2>
           {"subtitle" in content && (
             <p className="mt-4 text-sm font-bold leading-7 text-brand-light/78 sm:text-base sm:leading-8">
-              {content.subtitle}
+              <MixedText text={content.subtitle} />
             </p>
           )}
         </div>
@@ -167,10 +170,10 @@ export function ScrollJourneySection() {
                       اپیزود {persianNumberFormatter.format(index + 1)}
                     </p>
                     <h3 className="text-sm font-black leading-7 text-brand-white lg:text-base">
-                      {episode.topic}
+                      <MixedText text={episode.topic} />
                     </h3>
                     <p className="mt-2 text-xs font-bold leading-6 text-brand-light/72 lg:text-sm lg:leading-7">
-                      {episode.outcome}
+                      <MixedText text={episode.outcome} />
                     </p>
                   </div>
                 </article>

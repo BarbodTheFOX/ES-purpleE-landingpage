@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { siteContent } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 
 export function Header() {
   return (
@@ -12,10 +13,10 @@ export function Header() {
           </span>
           <span className="leading-tight">
             <span className="block font-poppins text-sm font-black text-brand-white">
-              {siteContent.brand.campaign}
+              <MixedText text={siteContent.brand.campaign} />
             </span>
             <span className="block font-poppins text-xs text-brand-light/80">
-              {siteContent.brand.eventum}
+              <MixedText text={siteContent.brand.eventum} />
             </span>
           </span>
         </a>
@@ -27,7 +28,7 @@ export function Header() {
               href={item.href}
               className="transition hover:text-brand-white"
             >
-              {item.label}
+              <MixedText text={item.label} />
             </a>
           ))}
         </nav>

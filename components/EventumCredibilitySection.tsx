@@ -2,6 +2,7 @@
 
 import { BadgeCheck } from "lucide-react";
 import { useRef } from "react";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -50,7 +51,7 @@ export function EventumCredibilitySection() {
           data-eventum-reveal=""
           className="rounded-3xl border border-brand-purple/16 bg-white/[0.035] p-5 text-base font-bold leading-9 text-brand-light/85 sm:p-7"
         >
-          {content.text}
+          <MixedText text={content.text} />
         </p>
         <div className="grid gap-3">
           {content.cards.map((card) => (
@@ -60,7 +61,9 @@ export function EventumCredibilitySection() {
               className="flex items-center gap-3 rounded-2xl border border-brand-purple/14 bg-ink/70 p-4"
             >
               <BadgeCheck className="size-5 shrink-0 text-brand-purple" aria-hidden="true" />
-              <span className="text-sm font-black text-brand-white">{card}</span>
+              <span className="text-sm font-black text-brand-white">
+                <MixedText text={card} />
+              </span>
             </div>
           ))}
         </div>

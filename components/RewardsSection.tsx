@@ -3,6 +3,7 @@
 import { Crown, FileText, Gift, Route, Trophy, WalletCards } from "lucide-react";
 import { useRef, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -88,15 +89,15 @@ export function RewardsSection() {
               <div className="absolute -left-16 -top-16 size-44 rounded-full bg-brand-purple/10 blur-3xl" />
               <div className="relative">
                 <p className="text-sm font-bold leading-7 text-brand-light/80">
-                  {content.intro}
+                  <MixedText text={content.intro} />
                 </p>
                 <div className="mt-7 rounded-3xl border border-brand-purple/25 bg-ink/70 p-5">
                   <ActiveIcon className="mb-5 size-7 text-brand-purple" aria-hidden="true" />
                   <p className="font-poppins text-4xl font-black leading-none text-brand-white sm:text-5xl">
-                    {activeCard.value}
+                    <MixedText text={activeCard.value} />
                   </p>
                   <h3 className="mt-4 text-lg font-black text-brand-white">
-                    {activeCard.title}
+                    <MixedText text={activeCard.title} />
                   </h3>
                   <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
                     <div
@@ -108,7 +109,7 @@ export function RewardsSection() {
                   </div>
                 </div>
                 <p className="mt-5 rounded-2xl border border-brand-purple/15 bg-white/[0.035] p-4 text-sm font-bold leading-7 text-brand-light/75">
-                  {content.note}
+                  <MixedText text={content.note} />
                 </p>
               </div>
             </GlassCard>
@@ -137,13 +138,13 @@ export function RewardsSection() {
                   </span>
                   <div>
                     <p className="font-poppins text-2xl font-black text-brand-purple">
-                      {card.value}
+                      <MixedText text={card.value} />
                     </p>
                     <h3 className="mt-2 text-lg font-black text-brand-white">
-                      {card.title}
+                      <MixedText text={card.title} />
                     </h3>
                     <p className="mt-3 text-sm leading-7 text-brand-light/80">
-                      {card.text}
+                      <MixedText text={card.text} />
                     </p>
                   </div>
                 </div>

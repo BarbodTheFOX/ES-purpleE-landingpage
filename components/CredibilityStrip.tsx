@@ -8,6 +8,7 @@ import {
   registerGsap,
   useGSAP,
 } from "@/lib/gsap/client";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
 export function CredibilityStrip() {
@@ -52,7 +53,9 @@ export function CredibilityStrip() {
               className="flex min-h-14 items-center gap-2 rounded-2xl bg-ink/72 px-3 py-3 text-xs font-black leading-5 text-brand-light"
             >
               <ShieldCheck className="size-4 shrink-0 text-brand-purple" aria-hidden="true" />
-              <span>{item}</span>
+              <span>
+                <MixedText text={item} />
+              </span>
             </div>
           ))}
         </div>

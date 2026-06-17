@@ -4,6 +4,7 @@ import Image from "next/image";
 import { ArrowLeft, LockKeyhole } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import {
   gsap,
   prefersReducedMotion,
@@ -49,12 +50,14 @@ export function PdfGiftsSection() {
     <section ref={scope} id="pdf-gifts" className="px-5 py-10 sm:px-6 lg:px-8 lg:py-16">
       <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
         <div data-pdf-gift="">
-          <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
+          <p className="mb-3 text-sm font-bold text-brand-purple">
+            <MixedText text={content.eyebrow} />
+          </p>
           <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
-            {content.title}
+            <MixedText text={content.title} />
           </h2>
           <p className="mt-4 text-sm font-bold leading-7 text-brand-light/82 sm:text-base sm:leading-8">
-            {content.text}
+            <MixedText text={content.text} />
           </p>
           <Button href="#registration" className="mt-6 w-full sm:w-auto">
             {content.cta}
@@ -82,13 +85,15 @@ export function PdfGiftsSection() {
                 <LockKeyhole className="size-4 text-brand-gray" aria-hidden="true" />
               </div>
               <p className="font-poppins text-xs font-black text-brand-purple">
-                PDF {new Intl.NumberFormat("fa-IR", { useGrouping: false }).format(index + 1)}
+                <MixedText
+                  text={`PDF ${new Intl.NumberFormat("fa-IR", { useGrouping: false }).format(index + 1)}`}
+                />
               </p>
               <h3 className="mt-2 min-h-14 text-base font-black leading-7 text-brand-white">
-                {card.title}
+                <MixedText text={card.title} />
               </h3>
               <p className="mt-3 text-xs font-bold leading-6 text-brand-light/72">
-                {card.text}
+                <MixedText text={card.text} />
               </p>
               <span className="mt-4 inline-flex rounded-full border border-brand-yellow/25 bg-brand-yellow/10 px-3 py-1 text-xs font-black text-brand-yellow">
                 {content.pending}

@@ -3,6 +3,7 @@
 import { UserCheck } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -55,9 +56,11 @@ export function WhoIsItForSection() {
               className="rounded-3xl border border-brand-purple/16 bg-white/[0.035] p-5"
             >
               <UserCheck className="mb-5 size-6 text-brand-purple" aria-hidden="true" />
-              <h3 className="text-lg font-black text-brand-white">{card.title}</h3>
+              <h3 className="text-lg font-black text-brand-white">
+                <MixedText text={card.title} />
+              </h3>
               <p className="mt-3 text-sm font-bold leading-7 text-brand-light/76">
-                {card.text}
+                <MixedText text={card.text} />
               </p>
             </article>
           ))}

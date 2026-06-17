@@ -7,6 +7,7 @@ import {
   registerGsap,
   useGSAP,
 } from "@/lib/gsap/client";
+import { MixedText } from "@/components/ui/DirectionalText";
 
 export function MiniRewardsStrip() {
   const scope = useRef<HTMLElement | null>(null);
@@ -58,10 +59,10 @@ export function MiniRewardsStrip() {
               className="min-w-[9.5rem] snap-start rounded-2xl border border-brand-purple/14 bg-ink/78 px-4 py-3 text-right sm:min-w-0 sm:text-center"
             >
               <p className="font-poppins text-lg font-black leading-none text-brand-white sm:text-sm">
-                {stat.value}
+                <MixedText text={stat.value} />
               </p>
               <p className="mt-1 text-[0.68rem] font-bold text-brand-light/70">
-                {stat.label}
+                <MixedText text={stat.label} />
               </p>
             </div>
           ))}

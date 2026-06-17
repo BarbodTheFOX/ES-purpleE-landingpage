@@ -1,3 +1,4 @@
+import { MixedText } from "@/components/ui/DirectionalText";
 import { cn } from "@/lib/utils";
 
 type SectionProps = {
@@ -15,11 +16,13 @@ export function Section({ id, eyebrow, title, children, className }: SectionProp
         {(eyebrow || title) && (
           <div className="mb-8 max-w-3xl">
             {eyebrow && (
-              <p className="mb-3 text-sm font-bold text-brand-purple">{eyebrow}</p>
+              <p className="mb-3 text-sm font-bold text-brand-purple">
+                <MixedText text={eyebrow} />
+              </p>
             )}
             {title && (
               <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl">
-                {title}
+                <MixedText text={title} />
               </h2>
             )}
           </div>

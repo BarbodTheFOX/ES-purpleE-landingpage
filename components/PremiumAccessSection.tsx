@@ -4,6 +4,7 @@ import Image from "next/image";
 import { BadgeCheck, Hash, Sparkles } from "lucide-react";
 import { useRef, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -92,7 +93,7 @@ export function PremiumAccessSection() {
       <div ref={scope}>
         {"intro" in content && (
           <p className="mb-5 max-w-3xl text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
-            {content.intro}
+            <MixedText text={content.intro} />
           </p>
         )}
         <GlassCard className="relative overflow-hidden border-brand-purple/20 p-5 sm:p-8">
@@ -127,9 +128,11 @@ export function PremiumAccessSection() {
                     }`}
                     aria-hidden="true"
                   />
-                  <p className="text-3xl font-black text-brand-white">{card.value}</p>
+                  <p className="text-3xl font-black text-brand-white">
+                    <MixedText text={card.value} />
+                  </p>
                   <p className="mt-3 text-sm font-bold leading-7 text-brand-light/80">
-                    {card.label}
+                    <MixedText text={card.label} />
                   </p>
                 </article>
               );
@@ -141,7 +144,7 @@ export function PremiumAccessSection() {
           >
             <p className="text-sm font-bold leading-7 text-brand-light/85">
               <span className="ml-2 inline-block size-2 rounded-full bg-brand-yellow align-middle" />
-              {content.note}
+              <MixedText text={content.note} />
             </p>
           </div>
         </GlassCard>

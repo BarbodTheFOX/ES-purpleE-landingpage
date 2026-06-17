@@ -3,6 +3,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { useRef } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MixedText } from "@/components/ui/DirectionalText";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -49,7 +50,7 @@ export function ProgramSection() {
       <div ref={scope} data-program-reveal="">
         <GlassCard className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:p-8">
           <p data-program-reveal="" className="text-base leading-9 text-brand-light/85">
-            {content.text}
+            <MixedText text={content.text} />
           </p>
           <div className="space-y-4">
             {content.highlights.map((highlight) => (
@@ -58,7 +59,9 @@ export function ProgramSection() {
                   className="mt-1 size-5 shrink-0 text-brand-purple"
                   aria-hidden="true"
                 />
-                <span className="text-sm font-bold leading-7 text-brand-white">{highlight}</span>
+                <span className="text-sm font-bold leading-7 text-brand-white">
+                  <MixedText text={highlight} />
+                </span>
               </div>
             ))}
           </div>

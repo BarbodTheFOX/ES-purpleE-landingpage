@@ -3,6 +3,7 @@
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { useRef, useState, type CSSProperties } from "react";
 import { Button } from "@/components/ui/Button";
+import { MixedText } from "@/components/ui/DirectionalText";
 import {
   gsap,
   prefersReducedMotion,
@@ -114,17 +115,19 @@ export function InteractiveUidGuideSection() {
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
           <div data-uid-intro="">
-            <p className="mb-3 text-sm font-bold text-brand-purple">{content.eyebrow}</p>
+            <p className="mb-3 text-sm font-bold text-brand-purple">
+              <MixedText text={content.eyebrow} />
+            </p>
             <h2 className="text-2xl font-black leading-tight text-brand-white sm:text-4xl lg:text-5xl">
-              {content.title}
+              <MixedText text={content.title} />
             </h2>
             <p className="mt-4 max-w-lg text-sm font-bold leading-7 text-brand-light/78 sm:text-base sm:leading-8">
-              {content.intro}
+              <MixedText text={content.intro} />
             </p>
             <div className="mt-7 hidden lg:block">
               <Button href="#registration">{content.cta}</Button>
               <p className="mt-4 text-sm font-bold leading-7 text-brand-gray">
-                {content.microCopy}
+                <MixedText text={content.microCopy} />
               </p>
             </div>
           </div>
@@ -199,10 +202,10 @@ export function InteractiveUidGuideSection() {
                       )}
                     </div>
                     <h3 className="text-base font-black text-brand-white lg:text-lg">
-                      {step.title}
+                      <MixedText text={step.title} />
                     </h3>
                     <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75 lg:mt-3">
-                      {step.text}
+                      <MixedText text={step.text} />
                     </p>
                   </article>
                 );
@@ -214,7 +217,7 @@ export function InteractiveUidGuideSection() {
                 {content.cta}
               </Button>
               <p className="mt-3 text-center text-xs font-bold leading-6 text-brand-gray">
-                {content.microCopy}
+                <MixedText text={content.microCopy} />
               </p>
             </div>
           </div>
