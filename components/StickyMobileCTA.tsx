@@ -55,7 +55,7 @@ export function StickyMobileCTA() {
           : "translate-y-0 opacity-100"
       }`}
     >
-      ثبت UID و بررسی ظرفیت
+      ثبت‌نام در کمپین
       <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
     </a>
   );

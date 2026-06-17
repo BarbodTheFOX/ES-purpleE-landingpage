@@ -2,7 +2,6 @@
 
 import { AlertTriangle } from "lucide-react";
 import { useRef } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { Section } from "@/components/ui/Section";
 import {
   gsap,
@@ -57,29 +56,38 @@ export function ProblemSection() {
 
   return (
     <Section eyebrow={content.eyebrow} title={content.title}>
-      <div ref={scope} className="space-y-5">
+      <div ref={scope} className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
         {"text" in content && (
-          <p
+          <div
             data-problem-card=""
-            className="max-w-4xl text-sm font-bold leading-8 text-brand-light/82 sm:text-base"
+            className="rounded-[2rem] border border-brand-purple/18 bg-gradient-to-br from-brand-purple/10 to-white/[0.025] p-5 sm:p-7"
           >
-            {content.text}
-          </p>
+            <p className="text-xl font-black leading-10 text-brand-white sm:text-3xl sm:leading-[1.6]">
+              {content.statement}
+            </p>
+            <p className="mt-5 text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
+              {content.text}
+            </p>
+          </div>
         )}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {content.items.map((item, index) => (
-          <div key={item.title} data-problem-card="">
-            <GlassCard className="h-full transition-shadow duration-300 hover:shadow-glow">
+        <div className="grid gap-3">
+          {content.items.map((item) => (
+            <div
+              key={item.title}
+              data-problem-card=""
+              className="group rounded-2xl border border-brand-purple/12 bg-white/[0.025] p-4 transition hover:border-brand-purple/35 hover:bg-white/[0.045]"
+            >
               <AlertTriangle
                 data-problem-icon=""
-                className="mb-5 size-6 text-brand-purple"
+                className="mb-3 size-5 text-brand-purple"
                 aria-hidden="true"
               />
-              <h3 className="text-lg font-black text-brand-white">{item.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-brand-light/75">{item.text}</p>
-            </GlassCard>
-          </div>
-        ))}
+              <h3 className="text-base font-black text-brand-white">{item.title}</h3>
+              <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75">
+                {item.text}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </Section>

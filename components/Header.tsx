@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import { bitunixReferralUrl, siteContent } from "@/lib/content";
+import { siteContent } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 
 export function Header() {
@@ -33,17 +33,15 @@ export function Header() {
         </nav>
 
         <Button
-          href={bitunixReferralUrl}
-          target={bitunixReferralUrl.startsWith("http") ? "_blank" : undefined}
-          rel={bitunixReferralUrl.startsWith("http") ? "noreferrer" : undefined}
+          href="#registration"
           className="hidden md:inline-flex"
         >
-          <span>ثبت‌نام با لینک Bitunix</span>
+          <span>{siteContent.nav.cta}</span>
           <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
         </Button>
 
         <Button href="#registration" variant="secondary" className="md:hidden">
-          ثبت UID
+          {siteContent.nav.cta}
         </Button>
       </div>
     </header>

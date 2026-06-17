@@ -37,7 +37,11 @@ function OptionalBadge() {
   return <span className="mr-2 text-xs font-bold text-brand-gray">اختیاری</span>;
 }
 
-export function RegistrationForm() {
+type RegistrationFormProps = {
+  id?: string;
+};
+
+export function RegistrationForm({ id = "registration" }: RegistrationFormProps) {
   const scope = useRef<HTMLDivElement | null>(null);
   const content = siteContent.form;
   const [serverMessage, setServerMessage] = useState<string | null>(null);
@@ -215,7 +219,7 @@ export function RegistrationForm() {
   }
 
   return (
-    <div id="registration" ref={scope} className="scroll-mt-24">
+    <div id={id} ref={scope} className="scroll-mt-24">
       <div data-form-panel="">
           <GlassCard className="border-brand-purple/20 p-3.5 shadow-[0_18px_55px_rgba(143,0,255,0.16)] sm:p-5">
             <div className="mb-4 rounded-2xl border border-brand-purple/16 bg-brand-purple/[0.08] p-3.5 sm:p-4">
@@ -248,6 +252,9 @@ export function RegistrationForm() {
                       ? content.first500Success
                       : content.standardSuccess)}
                 </p>
+                <Button href="/gifts" variant="secondary" className="mt-4 w-full border-brand-green/30 bg-brand-green/10 text-brand-green">
+                  {content.successCta}
+                </Button>
               </div>
             )}
 

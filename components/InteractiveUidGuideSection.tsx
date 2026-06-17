@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { Button } from "@/components/ui/Button";
 import {
   gsap,
@@ -119,7 +119,7 @@ export function InteractiveUidGuideSection() {
               {content.title}
             </h2>
             <p className="mt-4 max-w-lg text-sm font-bold leading-7 text-brand-light/78 sm:text-base sm:leading-8">
-              مسیر ورود کوتاه است: ثبت‌نام با لینک Eventum، برداشتن UID، و ثبت اطلاعات همین‌جا.
+              {content.intro}
             </p>
             <div className="mt-7 hidden lg:block">
               <Button href="#registration">{content.cta}</Button>
@@ -136,7 +136,10 @@ export function InteractiveUidGuideSection() {
                 data-uid-progress=""
                 className="absolute right-0 top-5 h-px bg-brand-purple shadow-glow"
               />
-              <div className="relative grid grid-cols-3 gap-4">
+              <div
+                className="relative grid gap-4"
+                style={{ gridTemplateColumns: `repeat(${content.steps.length}, minmax(0, 1fr))` }}
+              >
                 {content.steps.map((step, index) => {
                   const isActive = activeStep === index;
                   const isPassed = activeStep > index;
@@ -161,7 +164,13 @@ export function InteractiveUidGuideSection() {
               </div>
             </div>
 
-            <div className="grid gap-4 lg:grid-cols-3">
+            <div
+              className="grid gap-4 lg:[grid-template-columns:repeat(var(--uid-step-count),minmax(0,1fr))]"
+              style={
+                { "--uid-step-count": content.steps.length } as CSSProperties &
+                  Record<"--uid-step-count", number>
+              }
+            >
               {content.steps.map((step, index) => {
                 const isActive = activeStep === index;
 

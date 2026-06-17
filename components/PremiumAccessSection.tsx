@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { BadgeCheck, Hash, Sparkles } from "lucide-react";
 import { useRef, useState } from "react";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -87,7 +88,7 @@ export function PremiumAccessSection() {
   );
 
   return (
-    <Section id="premium-access" eyebrow={content.eyebrow} title={content.title}>
+    <Section id="vip-channel" eyebrow={content.eyebrow} title={content.title}>
       <div ref={scope}>
         {"intro" in content && (
           <p className="mb-5 max-w-3xl text-sm font-bold leading-8 text-brand-light/82 sm:text-base">
@@ -95,6 +96,13 @@ export function PremiumAccessSection() {
           </p>
         )}
         <GlassCard className="relative overflow-hidden border-brand-purple/20 p-5 sm:p-8">
+          <Image
+            src="/assets/purple-evolution/vip_emblem.png"
+            alt=""
+            width={220}
+            height={220}
+            className="absolute left-5 top-5 hidden w-24 opacity-75 drop-shadow-[0_18px_35px_rgba(0,0,0,0.35)] sm:block"
+          />
           <div className="relative mb-6 flex items-center gap-3">
             <span className="h-px flex-1 bg-gradient-to-l from-brand-purple/55 to-transparent" />
             <span className="size-2 rounded-full bg-brand-yellow" />

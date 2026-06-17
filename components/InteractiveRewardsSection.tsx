@@ -1,6 +1,6 @@
 "use client";
 
-import { Crown, FileText, Gift, Route, Trophy, WalletCards } from "lucide-react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import {
   gsap,
@@ -19,16 +19,24 @@ const mobileRewardTexts = [
   "جوایز اصلی کمپین برای شرکت‌کنندگان واجد شرایط.",
   "۲۴ بونوس ۵۰ دلاری در طول مسیر کمپین.",
   "دسترسی VIP Level 3 برای همراهان منتخب.",
-  "ورود به مسیر کمپین‌ها و مسابقات TCP.",
-  "شانس حضور در ورکشاپ حضوری Eventum.",
-  "کالکشن‌های پرمیوم برای ثبت‌نام معتبر.",
+  "۴۰۰ ظرفیت عمومی برای دسترسی به چنل VIP.",
+  "سه فایل اختصاصی برای ثبت‌نام معتبر.",
+  "ثبت UID از مسیر Eventum و Bitunix.",
+];
+
+const rewardAssets = [
+  "bnb_coin.png",
+  "bonus_voucher.png",
+  "vip_emblem.png",
+  "access_card.png",
+  "pdf_folder.png",
+  "reward_box.png",
 ];
 
 export function InteractiveRewardsSection() {
   const scope = useRef<HTMLElement | null>(null);
   const [activeReward, setActiveReward] = useState(0);
   const content = siteContent.rewards;
-  const icons = [Trophy, Gift, Crown, Route, WalletCards, FileText];
 
   useGSAP(
     () => {
@@ -112,48 +120,100 @@ export function InteractiveRewardsSection() {
           </p>
         </div>
 
-        <div className="hidden grid-cols-3 gap-4 lg:grid">
-          {content.pdfCards.map((card, index) => {
-            const Icon = icons[index];
-            const isFeatured = index === 0;
+        <div className="hidden gap-4 lg:grid lg:grid-cols-[1.05fr_0.95fr]">
+          {(() => {
+            const featured = content.pdfCards[0];
 
             return (
               <article
-                key={card.title}
                 data-reward-card=""
-                className={`group rounded-[1.75rem] border bg-white/[0.035] p-6 opacity-0 transition duration-300 hover:-translate-y-1 hover:border-brand-purple/55 hover:bg-white/[0.055] ${
-                  isFeatured
-                    ? "col-span-2 min-h-[22rem] border-brand-purple/45 bg-brand-purple/10"
-                    : "border-brand-purple/16"
-                }`}
+                className="relative min-h-[26rem] overflow-hidden rounded-[2rem] border border-brand-purple/45 bg-brand-purple/10 p-8 opacity-0"
               >
-                <div className="mb-7 flex items-center justify-between gap-4">
-                  <span className="flex size-12 items-center justify-center rounded-2xl border border-brand-purple/25 bg-brand-purple/10">
-                    <Icon className="size-6 text-brand-purple" aria-hidden="true" />
+                <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-l from-transparent via-brand-purple/70 to-transparent" />
+                <Image
+                  src="/assets/purple-evolution/bnb_coin.png"
+                  alt=""
+                  width={260}
+                  height={260}
+                  className="absolute left-5 top-8 w-28 opacity-85 drop-shadow-[0_22px_32px_rgba(0,0,0,0.42)]"
+                />
+                <Image
+                  src="/assets/purple-evolution/sol_coin.png"
+                  alt=""
+                  width={260}
+                  height={260}
+                  className="absolute bottom-8 left-24 w-24 opacity-80 drop-shadow-[0_22px_32px_rgba(0,0,0,0.42)]"
+                />
+                <div className="mb-10 flex items-center justify-between">
+                  <span className="flex size-14 items-center justify-center rounded-2xl border border-brand-purple/30 bg-ink/60">
+                    <Image
+                      src="/assets/purple-evolution/reward_box.png"
+                      alt=""
+                      width={96}
+                      height={96}
+                      className="h-11 w-11 object-contain"
+                    />
                   </span>
-                  <span className="font-poppins text-xs font-black text-brand-gray">
-                    {persianNumberFormatter.format(index + 1)}
-                  </span>
+                  {"eligibility" in featured && (
+                    <span className="rounded-full border border-brand-purple/25 bg-ink/60 px-4 py-2 text-xs font-black text-brand-light">
+                      {featured.eligibility}
+                    </span>
+                  )}
                 </div>
-                <p
-                  className={`font-poppins font-black leading-none text-brand-white ${
-                    isFeatured ? "text-5xl" : "text-3xl"
-                  }`}
-                >
-                  {card.value}
+                <p className="font-poppins text-6xl font-black leading-none text-brand-white">
+                  {featured.value}
                 </p>
-                <h3 className="mt-5 text-xl font-black text-brand-white">{card.title}</h3>
-                <p className="mt-4 text-sm font-bold leading-8 text-brand-light/78">
-                  {card.text}
+                <h3 className="mt-6 text-2xl font-black text-brand-white">
+                  {featured.title}
+                </h3>
+                <p className="mt-5 max-w-2xl text-sm font-bold leading-8 text-brand-light/78">
+                  {featured.text}
                 </p>
-                {"eligibility" in card && (
-                  <span className="mt-5 inline-flex rounded-full border border-brand-purple/20 bg-brand-purple/10 px-3 py-1 text-xs font-black text-brand-light">
-                    {card.eligibility}
-                  </span>
-                )}
               </article>
             );
-          })}
+          })()}
+
+          <div className="grid gap-3">
+            {content.pdfCards.slice(1).map((card, index) => {
+              const image = rewardAssets[index + 1];
+
+              return (
+                <article
+                  key={card.title}
+                  data-reward-card=""
+                  className="group flex items-start gap-4 rounded-3xl border border-brand-purple/14 bg-white/[0.03] p-4 opacity-0 transition hover:border-brand-purple/40 hover:bg-white/[0.05]"
+                >
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-brand-purple/10">
+                    <Image
+                      src={`/assets/purple-evolution/${image}`}
+                      alt=""
+                      width={72}
+                      height={72}
+                      className="h-9 w-9 object-contain"
+                    />
+                  </span>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <p className="font-poppins text-2xl font-black text-brand-white">
+                        {card.value}
+                      </p>
+                      {"eligibility" in card && (
+                        <span className="rounded-full border border-brand-purple/20 bg-brand-purple/10 px-3 py-1 text-[0.68rem] font-black text-brand-light">
+                          {card.eligibility}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="mt-2 text-base font-black text-brand-white">
+                      {card.title}
+                    </h3>
+                    <p className="mt-2 text-sm font-bold leading-7 text-brand-light/72">
+                      {card.text}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
 
         <div
@@ -173,8 +233,8 @@ export function InteractiveRewardsSection() {
           }}
         >
           {content.pdfCards.map((card, index) => {
-            const Icon = icons[index];
             const isFeatured = index === 0;
+            const image = rewardAssets[index];
 
             return (
               <article
@@ -189,7 +249,13 @@ export function InteractiveRewardsSection() {
               >
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <span className="flex size-10 items-center justify-center rounded-2xl bg-brand-purple/10">
-                    <Icon className="size-5 text-brand-purple" aria-hidden="true" />
+                    <Image
+                      src={`/assets/purple-evolution/${image}`}
+                      alt=""
+                      width={72}
+                      height={72}
+                      className="h-9 w-9 object-contain"
+                    />
                   </span>
                   <span className="font-poppins text-xs font-black text-brand-gray">
                     {persianNumberFormatter.format(index + 1)}

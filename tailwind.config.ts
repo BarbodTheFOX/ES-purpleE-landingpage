@@ -26,8 +26,17 @@ const config: Config = {
         },
       },
       fontFamily: {
+        sans: [
+          "var(--font-eventum)",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif",
+        ],
         peyda: [
-          "Peyda",
+          "var(--font-eventum)",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

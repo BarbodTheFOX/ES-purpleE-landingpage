@@ -23,10 +23,9 @@ body {
     radial-gradient(circle at 82% 8%, rgba(255, 100, 196, 0.13), transparent 28rem),
     linear-gradient(180deg, #07070b 0%, #0b0a12 48%, #07070b 100%);
   color: #ffffff;
-  /* TODO: Replace system fallback with local Peyda font files when brand assets are available. */
   /* TODO: Replace system fallback with local Poppins font files for Latin accents when brand assets are available. */
   font-family:
-    Peyda,
+    var(--font-eventum),
     ui-sans-serif,
     system-ui,
     -apple-system,

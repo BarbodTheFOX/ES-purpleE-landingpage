@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Gift } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
 import {
@@ -9,7 +9,7 @@ import {
   registerGsap,
   useGSAP,
 } from "@/lib/gsap/client";
-import { bitunixReferralUrl, siteContent } from "@/lib/content";
+import { siteContent } from "@/lib/content";
 
 export function FinalCTASection() {
   const scope = useRef<HTMLElement | null>(null);
@@ -61,14 +61,12 @@ export function FinalCTASection() {
             <ArrowLeft className="mr-2 size-4" aria-hidden="true" />
           </Button>
           <Button
-            href={bitunixReferralUrl}
-            target={bitunixReferralUrl.startsWith("http") ? "_blank" : undefined}
-            rel={bitunixReferralUrl.startsWith("http") ? "noreferrer" : undefined}
+            href="#rewards"
             variant="secondary"
             className="w-full sm:w-auto"
           >
             {content.secondary}
-            <ExternalLink className="mr-2 size-4" aria-hidden="true" />
+            <Gift className="mr-2 size-4" aria-hidden="true" />
           </Button>
         </div>
       </div>
