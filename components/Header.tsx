@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { siteContent } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
@@ -8,9 +9,14 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-brand-purple/20 bg-ink/75 px-5 py-4 backdrop-blur-xl sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
         <a href="#top" className="flex items-center gap-3">
-          <span className="flex size-10 items-center justify-center rounded-full bg-brand-purple text-sm font-black text-brand-white shadow-glow">
-            PE
-          </span>
+          <Image
+            src="/assets/brand/eventum-sign.jpg"
+            alt="Purple Evolution"
+            width={44}
+            height={44}
+            className="size-10 shrink-0 rounded-2xl border border-brand-purple/25 object-cover shadow-[0_0_24px_rgba(143,0,255,0.28)] sm:size-11"
+            priority
+          />
           <span className="leading-tight">
             <span className="block font-poppins text-sm font-black text-brand-white">
               <MixedText text={siteContent.brand.campaign} />
