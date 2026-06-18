@@ -28,7 +28,11 @@ export function RewardsSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-reward-card]", { opacity: 1, y: 0 });
+        gsap.set("[data-reward-card], [data-reward-value]", {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
         return;
       }
 
@@ -43,6 +47,22 @@ export function RewardsSection() {
           start: "top 72%",
         },
       });
+
+      gsap.fromTo(
+        "[data-reward-value]",
+        { opacity: 0, scale: 0.92 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.52,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 68%",
+          },
+        },
+      );
 
       gsap.utils.toArray<HTMLElement>("[data-reward-card]").forEach((card, index) => {
         gsap.timeline({
@@ -93,7 +113,10 @@ export function RewardsSection() {
                 </p>
                 <div className="mt-7 rounded-3xl border border-brand-purple/25 bg-ink/70 p-5">
                   <ActiveIcon className="mb-5 size-7 text-brand-purple" aria-hidden="true" />
-                  <p className="font-poppins text-4xl font-black leading-none text-brand-white sm:text-5xl">
+                  <p
+                    data-reward-value=""
+                    className="font-poppins text-4xl font-black leading-none text-brand-white drop-shadow-[0_0_24px_rgba(143,0,255,0.20)] sm:text-5xl"
+                  >
                     <MixedText text={activeCard.value} />
                   </p>
                   <h3 className="mt-4 text-lg font-black text-brand-white">
@@ -137,7 +160,10 @@ export function RewardsSection() {
                     <Icon className="size-5 text-brand-purple" aria-hidden="true" />
                   </span>
                   <div>
-                    <p className="font-poppins text-2xl font-black text-brand-purple">
+                    <p
+                      data-reward-value=""
+                      className="font-poppins text-2xl font-black text-brand-purple drop-shadow-[0_0_18px_rgba(143,0,255,0.20)]"
+                    >
                       <MixedText text={card.value} />
                     </p>
                     <h3 className="mt-2 text-lg font-black text-brand-white">

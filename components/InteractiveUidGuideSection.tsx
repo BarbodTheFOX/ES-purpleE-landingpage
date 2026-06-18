@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
-import { useRef, useState, type CSSProperties } from "react";
+import { CheckCircle2 } from "lucide-react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { MixedText } from "@/components/ui/DirectionalText";
 import {
@@ -31,17 +31,17 @@ export function InteractiveUidGuideSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-uid-intro], [data-uid-step-card]", {
+        gsap.set("[data-join-copy], [data-join-step], [data-join-node]", {
           opacity: 1,
           y: 0,
           scale: 1,
         });
-        gsap.set("[data-uid-progress]", { scaleX: 1 });
+        gsap.set("[data-join-line]", { scaleY: 1 });
         return;
       }
 
       gsap.fromTo(
-        "[data-uid-intro]",
+        "[data-join-copy]",
         { opacity: 0, y: 26 },
         {
           opacity: 1,
@@ -56,21 +56,21 @@ export function InteractiveUidGuideSection() {
       );
 
       gsap.fromTo(
-        "[data-uid-progress]",
-        { scaleX: 0, transformOrigin: "right center" },
+        "[data-join-line]",
+        { scaleY: 0, transformOrigin: "top center" },
         {
-          scaleX: 1,
+          scaleY: 1,
           ease: "none",
           scrollTrigger: {
             trigger: scope.current,
-            start: "top 78%",
-            end: "bottom 60%",
+            start: "top 72%",
+            end: "bottom 62%",
             scrub: 0.3,
           },
         },
       );
 
-      ScrollTrigger.batch("[data-uid-step-card]", {
+      ScrollTrigger.batch("[data-join-step]", {
         start: "top 82%",
         onEnter: (batch) => {
           gsap.fromTo(
@@ -89,8 +89,25 @@ export function InteractiveUidGuideSection() {
         },
       });
 
+      ScrollTrigger.batch("[data-join-node]", {
+        start: "top 82%",
+        onEnter: (batch) => {
+          gsap.fromTo(
+            batch,
+            { scale: 0.86 },
+            {
+              scale: 1,
+              duration: 0.48,
+              stagger: 0.08,
+              ease: "back.out(1.7)",
+              overwrite: true,
+            },
+          );
+        },
+      });
+
       const triggers = gsap.utils
-        .toArray<HTMLElement>("[data-uid-step-card]")
+        .toArray<HTMLElement>("[data-join-step]")
         .map((card, index) =>
           ScrollTrigger.create({
             trigger: card,
@@ -110,11 +127,11 @@ export function InteractiveUidGuideSection() {
     <section
       ref={scope}
       id="how-to-join"
-      className="relative px-5 py-10 sm:px-6 lg:px-8 lg:py-16"
+      className="relative px-5 py-16 sm:px-6 lg:px-8 lg:py-20"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="grid gap-8 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
-          <div data-uid-intro="">
+        <div className="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start lg:gap-12">
+          <div data-join-copy="" className="lg:sticky lg:top-28">
             <p className="mb-3 text-sm font-bold text-brand-purple">
               <MixedText text={content.eyebrow} />
             </p>
@@ -132,28 +149,38 @@ export function InteractiveUidGuideSection() {
             </div>
           </div>
 
-          <div className="rounded-[1.5rem] border border-brand-purple/14 bg-white/[0.03] p-3.5 sm:p-5 lg:rounded-[2rem] lg:p-7">
-            <div className="relative mb-6 hidden lg:block">
-              <div className="absolute left-0 right-0 top-5 h-px bg-white/10" />
+          <div className="relative rounded-[1.5rem] border border-brand-purple/14 bg-white/[0.025] p-4 sm:p-5 lg:rounded-[2rem] lg:p-7">
+            <div
+              className="pointer-events-none absolute bottom-8 right-8 top-8 w-px bg-white/10 sm:right-9 lg:right-12"
+              aria-hidden="true"
+            >
               <div
-                data-uid-progress=""
-                className="absolute right-0 top-5 h-px bg-brand-purple shadow-glow"
+                data-join-line=""
+                className="absolute inset-x-0 top-0 h-full w-px origin-top scale-y-0 bg-brand-purple shadow-[0_0_24px_rgba(143,0,255,0.55)]"
               />
-              <div
-                className="relative grid gap-4"
-                style={{ gridTemplateColumns: `repeat(${content.steps.length}, minmax(0, 1fr))` }}
-              >
-                {content.steps.map((step, index) => {
-                  const isActive = activeStep === index;
-                  const isPassed = activeStep > index;
+            </div>
 
-                  return (
+            <div className="relative space-y-4 sm:space-y-5">
+              {content.steps.map((step, index) => {
+                const isActive = activeStep === index;
+                const isPassed = activeStep > index;
+
+                return (
+                  <article
+                    key={step.title}
+                    data-join-step=""
+                    className={`relative flex gap-4 rounded-2xl border p-4 pr-0 opacity-0 transition duration-300 sm:gap-5 sm:p-5 sm:pr-0 lg:rounded-3xl lg:p-5 lg:pr-0 ${
+                      isActive
+                        ? "border-brand-purple/55 bg-brand-purple/10 shadow-[0_18px_45px_rgba(143,0,255,0.14)]"
+                        : "border-brand-purple/14 bg-ink/58"
+                    }`}
+                  >
                     <span
-                      key={step.title}
-                      className={`relative z-10 flex size-10 items-center justify-center rounded-full border text-sm font-black transition ${
+                      data-join-node=""
+                      className={`relative z-10 mt-1 flex size-10 shrink-0 items-center justify-center rounded-full border text-sm font-black transition sm:size-11 ${
                         isActive || isPassed
                           ? "border-brand-purple bg-brand-purple text-brand-white shadow-glow"
-                          : "border-brand-purple/25 bg-night text-brand-gray"
+                          : "border-brand-purple/25 bg-night text-brand-light"
                       }`}
                     >
                       {isPassed ? (
@@ -162,51 +189,17 @@ export function InteractiveUidGuideSection() {
                         persianNumberFormatter.format(index + 1)
                       )}
                     </span>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div
-              className="grid gap-4 lg:[grid-template-columns:repeat(var(--uid-step-count),minmax(0,1fr))]"
-              style={
-                { "--uid-step-count": content.steps.length } as CSSProperties &
-                  Record<"--uid-step-count", number>
-              }
-            >
-              {content.steps.map((step, index) => {
-                const isActive = activeStep === index;
-
-                return (
-                  <article
-                    key={step.title}
-                    data-uid-step-card=""
-                    className={`rounded-2xl border p-4 opacity-0 transition duration-300 lg:rounded-3xl lg:p-5 ${
-                      isActive
-                        ? "border-brand-purple/55 bg-brand-purple/10 shadow-[0_18px_45px_rgba(143,0,255,0.14)]"
-                        : "border-brand-purple/15 bg-ink/62"
-                    }`}
-                  >
-                    <div className="mb-3 flex items-center justify-between lg:mb-5">
-                      <span
-                        className={`flex size-9 items-center justify-center rounded-full border text-sm font-black lg:size-10 ${
-                          isActive
-                            ? "border-brand-purple bg-brand-purple text-brand-white"
-                            : "border-brand-purple/25 bg-night text-brand-light"
-                        }`}
-                      >
-                        {persianNumberFormatter.format(index + 1)}
-                      </span>
-                      {index < content.steps.length - 1 && (
-                        <ArrowLeft className="hidden size-5 text-brand-purple/60 lg:block" />
-                      )}
+                    <div className="min-w-0 flex-1 py-0.5 pl-1 pr-3 sm:pr-4">
+                      <p className="mb-1.5 text-xs font-black text-brand-purple/90">
+                        مرحله {persianNumberFormatter.format(index + 1)}
+                      </p>
+                      <h3 className="text-base font-black leading-7 text-brand-white sm:text-lg">
+                        <MixedText text={step.title} />
+                      </h3>
+                      <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75">
+                        <MixedText text={step.text} />
+                      </p>
                     </div>
-                    <h3 className="text-base font-black text-brand-white lg:text-lg">
-                      <MixedText text={step.title} />
-                    </h3>
-                    <p className="mt-2 text-sm font-bold leading-7 text-brand-light/75 lg:mt-3">
-                      <MixedText text={step.text} />
-                    </p>
                   </article>
                 );
               })}

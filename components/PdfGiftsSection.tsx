@@ -26,7 +26,11 @@ export function PdfGiftsSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-pdf-gift]", { opacity: 1, y: 0, scale: 1 });
+        gsap.set("[data-pdf-gift], [data-pdf-icon]", {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
         return;
       }
 
@@ -41,6 +45,15 @@ export function PdfGiftsSection() {
           trigger: scope.current,
           start: "top 78%",
         },
+      });
+
+      gsap.to("[data-pdf-icon]", {
+        y: -5,
+        duration: 2.8,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.18,
       });
     },
     { scope },
@@ -75,6 +88,7 @@ export function PdfGiftsSection() {
               <div className="mb-5 flex items-center justify-between">
                 <span className="flex size-14 items-center justify-center rounded-2xl bg-brand-purple/10">
                   <Image
+                    data-pdf-icon=""
                     src="/assets/purple-evolution/pdf_folder.png"
                     alt=""
                     width={96}

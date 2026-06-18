@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { ExternalLink, Gift, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { HeroRewardHub } from "@/components/HeroRewardHub";
 import { RegistrationForm } from "@/components/RegistrationForm";
 import { Button } from "@/components/ui/Button";
 import { MixedText } from "@/components/ui/DirectionalText";
@@ -13,31 +13,6 @@ import {
   useGSAP,
 } from "@/lib/gsap/client";
 import { bitunixReferralUrl, siteContent } from "@/lib/content";
-
-const assetPath = "/assets/purple-evolution/";
-
-const floatingAssets = [
-  {
-    src: "bnb_coin.png",
-    alt: "",
-    className: "right-1 top-5 w-14 sm:right-8 sm:top-8 sm:w-24",
-  },
-  {
-    src: "sol_coin.png",
-    alt: "",
-    className: "left-2 top-12 w-14 sm:left-10 sm:top-20 sm:w-24",
-  },
-  {
-    src: "vip_emblem.png",
-    alt: "",
-    className: "right-7 bottom-7 w-16 sm:right-16 sm:bottom-12 sm:w-28",
-  },
-  {
-    src: "bonus_voucher.png",
-    alt: "",
-    className: "left-5 bottom-9 w-16 sm:left-14 sm:bottom-16 sm:w-32",
-  },
-];
 
 export function HeroSection() {
   const scope = useRef<HTMLElement | null>(null);
@@ -67,13 +42,27 @@ export function HeroSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-hero-reveal], [data-hero-asset]", {
+        gsap.set("[data-hero-reveal], [data-hero-title-line]", {
           opacity: 1,
           y: 0,
           scale: 1,
+          filter: "blur(0px)",
         });
         return;
       }
+
+      gsap.fromTo(
+        "[data-hero-title-line]",
+        { opacity: 0, y: 24, filter: "blur(8px)" },
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.72,
+          stagger: 0.1,
+          ease: "power3.out",
+        },
+      );
 
       gsap.from("[data-hero-reveal]", {
         opacity: 0,
@@ -83,14 +72,13 @@ export function HeroSection() {
         ease: "power3.out",
       });
 
-      gsap.from("[data-hero-asset]", {
-        opacity: 0,
-        y: 22,
-        scale: 0.94,
-        duration: 0.85,
-        stagger: 0.09,
-        delay: 0.15,
-        ease: "power3.out",
+      gsap.to("[data-hero-glow]", {
+        x: 18,
+        y: 8,
+        duration: 8,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
       });
 
       gsap.to("[data-hero-depth]", {
@@ -129,7 +117,10 @@ export function HeroSection() {
         id="top"
         className="relative overflow-hidden px-5 pb-7 pt-5 sm:px-6 sm:pb-12 sm:pt-12 lg:px-8 lg:pb-16 lg:pt-16"
       >
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_18%,rgba(143,0,255,0.22),transparent_32%),linear-gradient(180deg,rgba(143,0,255,0.10),transparent_62%)]" />
+        <div
+          data-hero-glow=""
+          className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_70%_18%,rgba(143,0,255,0.22),transparent_32%),linear-gradient(180deg,rgba(143,0,255,0.10),transparent_62%)]"
+        />
         <div className="absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-l from-transparent via-brand-purple/70 to-transparent" />
         <div
           data-hero-depth=""
@@ -138,57 +129,7 @@ export function HeroSection() {
 
         <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12">
           <div className="order-2 lg:order-1">
-            <div
-              data-hero-reveal=""
-              className="relative mx-auto max-w-md overflow-hidden rounded-[1.5rem] border border-brand-purple/22 bg-white/[0.035] p-3 shadow-[0_22px_80px_rgba(0,0,0,0.34)] sm:rounded-[2rem] sm:p-6"
-            >
-              <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-l from-transparent via-brand-purple to-transparent" />
-              <div className="relative min-h-[15.5rem] rounded-[1.25rem] border border-brand-purple/12 bg-[linear-gradient(145deg,rgba(143,0,255,0.12),rgba(255,255,255,0.025))] p-4 sm:min-h-[25rem] sm:rounded-[1.6rem] sm:p-5">
-                <div className="absolute inset-5 rounded-[1.25rem] border border-brand-purple/10" />
-                <div className="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-purple/25 bg-brand-purple/10 shadow-[0_0_70px_rgba(143,0,255,0.30)]" />
-                <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 bg-gradient-to-l from-transparent via-brand-purple/55 to-transparent" />
-                <div className="absolute left-1/2 top-1/2 h-[72%] w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-brand-purple/40 to-transparent" />
-
-                {floatingAssets.map((asset) => (
-                  <Image
-                    key={asset.src}
-                    data-hero-asset=""
-                    src={`${assetPath}${asset.src}`}
-                    alt={asset.alt}
-                    width={220}
-                    height={220}
-                    priority
-                    className={`absolute z-10 drop-shadow-[0_22px_35px_rgba(0,0,0,0.45)] ${asset.className}`}
-                  />
-                ))}
-
-                <div
-                  data-hero-asset=""
-                  className="absolute left-1/2 top-1/2 z-20 flex size-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-[1.6rem] border border-brand-purple/35 bg-ink/80 p-3 shadow-[0_0_55px_rgba(143,0,255,0.28)] sm:size-32 sm:rounded-[2rem] sm:p-4"
-                >
-                  <Image
-                    src={`${assetPath}reward_box.png`}
-                    alt=""
-                    width={160}
-                    height={160}
-                    className="h-auto w-16 sm:w-24"
-                    priority
-                  />
-                </div>
-              </div>
-
-              <div className="mt-3 grid grid-cols-2 gap-2 text-center sm:mt-4 sm:grid-cols-3">
-                {content.stats.slice(0, 6).map((stat) => (
-                  <span
-                    key={stat}
-                    data-hero-reveal=""
-                    className="rounded-2xl border border-brand-purple/14 bg-ink/70 px-2.5 py-2 font-poppins text-[0.68rem] font-black text-brand-light sm:px-3 sm:text-xs"
-                  >
-                    <MixedText text={stat} />
-                  </span>
-                ))}
-              </div>
-            </div>
+            <HeroRewardHub stats={content.stats.slice(0, 6)} />
           </div>
 
           <div className="order-1 lg:order-2 lg:pt-3">
@@ -200,18 +141,24 @@ export function HeroSection() {
               <MixedText text={content.eyebrow} />
             </p>
             <h1
-              data-hero-reveal=""
               aria-label={content.title}
               className="max-w-4xl text-right text-[2.05rem] font-black leading-[1.04] tracking-tight text-brand-white min-[380px]:text-[2.2rem] sm:text-5xl sm:leading-[1.03] lg:text-[3.45rem] xl:text-[3.9rem]"
             >
-              <span className="block">وارد</span>
-              <span className="block">
+              <span data-hero-title-line="" className="block">
+                وارد
+              </span>
+              <span data-hero-title-line="" className="block">
                 <bdi dir="ltr" className="inline-block whitespace-nowrap">
                   Purple Evolution
                 </bdi>
               </span>
-              <span className="block">شو</span>
-              <span className="mt-2 block whitespace-nowrap text-[0.68em] leading-[1.18] min-[380px]:text-[0.7em] sm:mt-3 sm:text-[0.72em] lg:text-[0.74em]">
+              <span data-hero-title-line="" className="block">
+                شو
+              </span>
+              <span
+                data-hero-title-line=""
+                className="mt-2 block whitespace-nowrap text-[0.68em] leading-[1.18] min-[380px]:text-[0.7em] sm:mt-3 sm:text-[0.72em] lg:text-[0.74em]"
+              >
                 برای جوایز و هدایای اختصاصی
               </span>
             </h1>

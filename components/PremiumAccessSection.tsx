@@ -29,7 +29,7 @@ export function PremiumAccessSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-premium-card], [data-premium-note]", {
+        gsap.set("[data-premium-card], [data-premium-note], [data-premium-asset]", {
           opacity: 1,
           y: 0,
           scale: 1,
@@ -71,6 +71,15 @@ export function PremiumAccessSection() {
         },
       );
 
+      gsap.to("[data-premium-asset]", {
+        y: -8,
+        rotation: -2,
+        duration: 3.6,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
       const triggers = gsap.utils
         .toArray<HTMLElement>("[data-premium-card]")
         .map((card, index) =>
@@ -98,6 +107,7 @@ export function PremiumAccessSection() {
         )}
         <GlassCard className="relative overflow-hidden border-brand-purple/20 p-5 sm:p-8">
           <Image
+            data-premium-asset=""
             src="/assets/purple-evolution/vip_emblem.png"
             alt=""
             width={220}

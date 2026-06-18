@@ -48,7 +48,7 @@ export function InteractiveRewardsSection() {
       }
 
       if (prefersReducedMotion()) {
-        gsap.set("[data-reward-intro], [data-reward-card]", {
+        gsap.set("[data-reward-intro], [data-reward-card], [data-reward-value], [data-reward-asset]", {
           opacity: 1,
           y: 0,
           scale: 1,
@@ -100,6 +100,32 @@ export function InteractiveRewardsSection() {
           });
         },
       });
+
+      gsap.fromTo(
+        "[data-reward-value]",
+        { opacity: 0, scale: 0.92 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.52,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: scope.current,
+            start: "top 68%",
+          },
+        },
+      );
+
+      gsap.to("[data-reward-asset]", {
+        y: -6,
+        rotation: 1.5,
+        duration: 3.1,
+        ease: "sine.inOut",
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.14,
+      });
     },
     { scope },
   );
@@ -134,6 +160,7 @@ export function InteractiveRewardsSection() {
               >
                 <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-l from-transparent via-brand-purple/70 to-transparent" />
                 <Image
+                  data-reward-asset=""
                   src="/assets/purple-evolution/bnb_coin.png"
                   alt=""
                   width={260}
@@ -141,6 +168,7 @@ export function InteractiveRewardsSection() {
                   className="absolute left-5 top-8 w-28 opacity-85 drop-shadow-[0_22px_32px_rgba(0,0,0,0.42)]"
                 />
                 <Image
+                  data-reward-asset=""
                   src="/assets/purple-evolution/sol_coin.png"
                   alt=""
                   width={260}
@@ -150,6 +178,7 @@ export function InteractiveRewardsSection() {
                 <div className="mb-10 flex items-center justify-between">
                   <span className="flex size-14 items-center justify-center rounded-2xl border border-brand-purple/30 bg-ink/60">
                     <Image
+                      data-reward-asset=""
                       src="/assets/purple-evolution/reward_box.png"
                       alt=""
                       width={96}
@@ -163,7 +192,10 @@ export function InteractiveRewardsSection() {
                     </span>
                   )}
                 </div>
-                <p className="font-poppins text-6xl font-black leading-none text-brand-white">
+                <p
+                  data-reward-value=""
+                  className="font-poppins text-6xl font-black leading-none text-brand-white drop-shadow-[0_0_28px_rgba(143,0,255,0.20)]"
+                >
                   <MixedText text={featured.value} />
                 </p>
                 <h3 className="mt-6 text-2xl font-black text-brand-white">
@@ -188,6 +220,7 @@ export function InteractiveRewardsSection() {
                 >
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-brand-purple/10">
                     <Image
+                      data-reward-asset=""
                       src={`/assets/purple-evolution/${image}`}
                       alt=""
                       width={72}
@@ -197,7 +230,10 @@ export function InteractiveRewardsSection() {
                   </span>
                   <div>
                     <div className="flex flex-wrap items-center gap-3">
-                      <p className="font-poppins text-2xl font-black text-brand-white">
+                      <p
+                        data-reward-value=""
+                        className="font-poppins text-2xl font-black text-brand-white drop-shadow-[0_0_20px_rgba(143,0,255,0.18)]"
+                      >
                         <MixedText text={card.value} />
                       </p>
                       {"eligibility" in card && (
@@ -253,6 +289,7 @@ export function InteractiveRewardsSection() {
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <span className="flex size-10 items-center justify-center rounded-2xl bg-brand-purple/10">
                     <Image
+                      data-reward-asset=""
                       src={`/assets/purple-evolution/${image}`}
                       alt=""
                       width={72}
@@ -264,7 +301,10 @@ export function InteractiveRewardsSection() {
                     {persianNumberFormatter.format(index + 1)}
                   </span>
                 </div>
-                <p className="font-poppins text-2xl font-black text-brand-purple">
+                <p
+                  data-reward-value=""
+                  className="font-poppins text-2xl font-black text-brand-purple drop-shadow-[0_0_18px_rgba(143,0,255,0.20)]"
+                >
                   <MixedText text={card.value} />
                 </p>
                 <h3 className="mt-3 text-lg font-black text-brand-white">
