@@ -34,7 +34,7 @@ export const siteContent = {
     eyebrow: "کمپین ویژه Eventum Space با حمایت Bitunix",
     title: "وارد Purple Evolution شو برای جوایز و هدایای اختصاصی",
     subtitle:
-      "با ثبت‌نام، شانس دریافت ۲ BNB، ۱۶ SOL، بونوس‌های ۵۰ دلاری، VIP Level 3 و دسترسی به VIP Channel رو داری.",
+      "در کنار تماشای Purple Evolution، همزمان شانس خودت رو برای دریافت جوایز کمپین هم داشته باش.",
     supportLine: "با حمایت Bitunix",
     primaryCta: "همین حالا ثبت‌نام کن",
     referralCta: "جوایز رو ببین",
