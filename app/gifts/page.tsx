@@ -4,8 +4,10 @@ import { ArrowRight, FileDown, LockKeyhole } from "lucide-react";
 import { MixedText } from "@/components/ui/DirectionalText";
 import { siteContent } from "@/lib/content";
 
-const movieMagazineHref = "/gifts/purple-evolution-movie-magazine.pdf";
-const activeGiftTitle = "مجله فیلم‌های پیشنهادی";
+const activeGiftLinks: Record<string, string> = {
+  "مجله فیلم‌های پیشنهادی": "/gifts/purple-evolution-movie-magazine.pdf",
+  "مجله کتاب‌های معرفی‌شده مهمان‌ها": "/gifts/purple-evolution-book-magazine.pdf",
+};
 
 export default function GiftsPage() {
   const content = siteContent.giftsPage;
@@ -52,7 +54,8 @@ export default function GiftsPage() {
 
         <section className="mt-10 grid gap-3 sm:grid-cols-3">
           {content.items.map((card) => {
-            const isActive = card.title === activeGiftTitle;
+            const giftHref = activeGiftLinks[card.title];
+            const isActive = Boolean(giftHref);
 
             return (
               <article
@@ -91,7 +94,7 @@ export default function GiftsPage() {
                 </p>
                 {isActive ? (
                   <a
-                    href={movieMagazineHref}
+                    href={giftHref}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-5 inline-flex min-h-10 items-center justify-center rounded-full bg-brand-purple px-4 py-2 text-xs font-black text-brand-white shadow-[0_0_28px_rgba(143,0,255,0.28)] transition hover:bg-brand-purple/85 active:scale-[0.98]"
